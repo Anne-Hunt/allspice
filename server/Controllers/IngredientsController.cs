@@ -12,4 +12,18 @@ public class IngredientsController : ControllerBase
         _ingredientsService = ingredientsService;
         _auth0Provider = auth0Provider;
     }
+
+    [HttpGet("{recipeId}")]
+    public ActionResult<List<Ingredient>> GetIngredients(int recipeId)
+    {
+        try
+        {
+            List<Ingredient> ingredients = _ingredientsService.GetIngredients(recipeId);
+            return Ok(ingredients);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
 }
