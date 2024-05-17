@@ -1,3 +1,4 @@
+
 namespace allspice.Services;
 
 public class IngredientsService
@@ -7,5 +8,10 @@ public class IngredientsService
     public IngredientsService(IngredientsRepository repository)
     {
         _repository = repository;
+    }
+
+    internal List<Ingredient> GetIngredients(int recipeId)
+    {
+        _repository.GetIngredients()
     }
 }
