@@ -26,7 +26,7 @@ public class IngredientsRepository
         FROM ingredients
         WHERE id = LAST_INSERT_ID
         ;";
-        Ingredient ingredient = _db.Query(sql).FirstOrDefault();
+        Ingredient ingredient = _db.Query(sql, ingredientData).FirstOrDefault();
         return ingredient;
     }
 
