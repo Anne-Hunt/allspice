@@ -1,0 +1,96 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+
+namespace allspice.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+
+public class RecipesController : ControllerBase
+{
+    private readonly RecipesService _recipesService;
+    private readonly Auth0Provider _auth0Provider;
+
+    public RecipesController(RecipesService recipesService, Auth0Provider auth0Provider)
+    {
+        _recipesService = recipesService;
+        _auth0Provider = auth0Provider;
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<ActionResult<Recipe>> CreateRecipe([FromBody] Recipe recipeData)
+    {
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            recipeData.CreatorId = userInfo.Id;
+            Recipe recipe = _recipesService.CreateRecipe(recipeData);
+            return Ok(recipe);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
+
+    public ActionResult<List<Recipe>> GetRecipes()
+    {
+        try
+        {
+            List<Recipe> recipes = _recipesService.GetRecipes();
+            return Ok(recipes);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
+
+    [HttpGet("{recipeId}")]
+    public ActionResult<Recipe> GetRecipeById(int recipeId)
+    {
+        try
+        {
+            Recipe recipe = _recipesService.GetRecipeById(recipeId);
+            return recipe;
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
+
+    [Authorize]
+    [HttpPut("{recipeId}")]
+    public async Task<ActionResult<Recipe>> UpdateRecipe([FromBody] Recipe recipeData, int recipeId)
+    {
+        try
+        {
+            Account user = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            Recipe updatedRecipe = _recipesService.UpdateRecipe(recipeId, recipeData, user.Id);
+            return updatedRecipe;
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
+
+    [Authorize]
+    [HttpDelete("{recipeId}")]
+
+    public async Task<ActionResult<string>> TrashRecipe(int recipeId)
+    {
+        try
+        {
+            Account user = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            string memo = _recipesService.TrashRecipe(recipeId, user.Id);
+            return Ok(memo);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
+}
