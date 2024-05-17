@@ -1,4 +1,6 @@
 
+
+
 namespace allspice.Repositories;
 
 public class FavoritesRepository
@@ -14,5 +16,18 @@ public class FavoritesRepository
         string sql = "SELECT * FROM favorites WHERE accountId = @userId;";
         List<Favorite> favorites = _db.Query<Favorite>(sql).ToList();
         return favorites;
+    }
+
+    internal Favorite GetFavoriteById(int favoriteId)
+    {
+        string sql = "SELECT * FROM favorites WHERE id = @favoriteId;";
+        Favorite favorite = _db.Query<Favorite>(sql).FirstOrDefault();
+        return favorite;
+    }
+
+    internal void TrashFavorite(int favoriteId)
+    {
+        string sql = "DELETE * FROM favorites WHERE id = @favoriteId LIMIT 1;";
+        _db.Execute(sql);
     }
 }
