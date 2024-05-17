@@ -23,6 +23,12 @@ public class FavoritesService
         return favorite;
     }
 
+    internal Favorite CreateFavorite(int recipeId, string userId)
+    {
+        Favorite favorite = _repository.CreateFavorite(recipeId, userId);
+        return favorite;
+    }
+
     internal string TrashFavorite(int favoriteId, string userId)
     {
         Favorite favorite = GetFavoriteById(favoriteId);

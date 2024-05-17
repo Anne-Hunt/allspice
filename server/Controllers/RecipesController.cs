@@ -1,5 +1,7 @@
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace allspice.Controllers;
 
@@ -11,12 +13,14 @@ public class RecipesController : ControllerBase
     private readonly RecipesService _recipesService;
     private readonly Auth0Provider _auth0Provider;
     private readonly IngredientsService _ingredientsService;
+    private readonly FavoritesService _favoriteService;
 
-    public RecipesController(RecipesService recipesService, Auth0Provider auth0Provider, IngredientsService ingredientsService)
+    public RecipesController(RecipesService recipesService, Auth0Provider auth0Provider, IngredientsService ingredientsService, FavoritesService favoriteService)
     {
         _recipesService = recipesService;
         _auth0Provider = auth0Provider;
         _ingredientsService = ingredientsService;
+        _favoriteService = favoriteService;
     }
 
     [HttpPost]
@@ -103,6 +107,24 @@ public class RecipesController : ControllerBase
         {
             List<Ingredient> ingredients = _ingredientsService.GetIngredients(recipeId);
             return Ok(ingredients);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
+
+    [Authorize]
+    [HttpPost("{recipeId}/favorites")]
+
+    public async Task<ActionResult<Favorite>> CreateFavorite(int recipeId)
+    {
+        try
+        {
+            Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            string userId = userInfo.Id;
+            Favorite favorite = _favoriteService.CreateFavorite(recipeId, userId);
+            return favorite;
         }
         catch (Exception exception)
         {
