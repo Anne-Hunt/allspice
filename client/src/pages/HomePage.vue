@@ -17,6 +17,10 @@ async function getRecipes(){
   }
 }
 
+function filter(){
+
+}
+
 onMounted(()=>
 {getRecipes()})
 </script>
@@ -28,9 +32,9 @@ onMounted(()=>
     <div class="row justify-content-center">
       <div class="col-6 shadow">
         <div class="row p-3 text-success">
-          <div class="col text-center">Home</div>
-          <div class="col text-center">My Recipes</div>
-          <div class="col text-center">Favorites</div>
+          <div class="col text-center" @click="filter()">Home</div>
+          <div class="col text-center" @click="filter()">My Recipes</div>
+          <div class="col text-center" @click="filter()">Favorites</div>
         </div>
       </div>
     </div>
