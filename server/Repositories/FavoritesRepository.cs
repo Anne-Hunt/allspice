@@ -24,7 +24,7 @@ public class FavoritesRepository
 
     internal void TrashFavorite(int favoriteId)
     {
-        string sql = "DELETE * FROM favorites WHERE id = @favoriteId LIMIT 1;";
+        string sql = "DELETE FROM favorites WHERE favorites.Id = @favoriteId LIMIT 1;";
         _db.Execute(sql);
     }
 

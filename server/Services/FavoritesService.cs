@@ -20,6 +20,10 @@ public class FavoritesService
     internal Favorite GetFavoriteById(int favoriteId)
     {
         Favorite favorite = _repository.GetFavoriteById(favoriteId);
+        if (favorite == null)
+        {
+            throw new Exception("Unable to find!");
+        }
         return favorite;
     }
 
