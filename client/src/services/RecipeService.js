@@ -22,14 +22,15 @@ class RecipeService {
         const recipe = await api.post('api/recipes', recipeData)
         const recipeDone = new Recipe(recipe)
         AppState.recipes.push(recipeDone)
+        AppState.activeRecipe = recipeDone
     }
 
-    async updateRecipe(recipeData){
+    async updateRecipe(recipeData, recipeId){
         const userId = AppState.account.id
         if(recipeData.creatorId != userId){
             throw new Error("You cannot edit what is not yours!")
         }
-        const recipeToUpdate = this.getRecipeById(recipeData.id)
+        const recipeToUpdate = this.getRecipeById(recipeId)
         if(!recipeToUpdate){
             throw new Error("You cannot edit what doesn't exist!")
         }
