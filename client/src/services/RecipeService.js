@@ -4,6 +4,11 @@ import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
 class RecipeService {
+    async getRecipeById(recipeId) {
+        const response = await api.get(`api/recipes/${recipeId}`)
+        const recipe = new Recipe(response.data)
+        AppState.activeRecipe = recipe
+    }
     async getRecipes() {
         const response = await api.get('api/recipes')
         const recipes = response.data.map(recipe => new Recipe(recipe))
@@ -17,6 +22,37 @@ class RecipeService {
         const recipe = await api.post('api/recipes', recipeData)
         const recipeDone = new Recipe(recipe)
         AppState.recipes.push(recipeDone)
+    }
+
+    async updateRecipe(recipeData){
+        const userId = AppState.account.id
+        if(recipeData.creatorId != userId){
+            throw new Error("You cannot edit what is not yours!")
+        }
+        const recipeToUpdate = this.getRecipeById(recipeData.id)
+        if(!recipeToUpdate){
+            throw new Error("You cannot edit what doesn't exist!")
+        }
+        const updated = await api.put(`api/recipes/${recipeData.id}`)
+        const revised = new Recipe(updated)
+        const recipeUpdate = AppState.recipes.findIndex(revised.id)
+        AppState.recipes.splice(recipeUpdate, 1)
+        AppState.recipes.push(revised)
+    }
+
+    async trashRecipe(recipeId){
+        const userId = AppState.account.id
+        const recipe = this.getRecipeById(recipeId)
+        if(!recipe){
+            throw new Error ("Does not exist!")
+        }
+        const foundRecipe = new Recipe(recipe)
+        if(foundRecipe.creatorId != userId){
+            throw new Error("You can't delete what isn't yours!")
+        }
+        await api.delete(`api/recipes/${recipeId}`)
+        const trash = AppState.recipes.findIndex(recipeId)
+        AppState.recipes.splice(trash, 1)
     }
 }
 

@@ -2,11 +2,25 @@
 import { computed } from 'vue';
 import { Recipe } from '../models/Recipe.js';
 import { AppState } from '../AppState.js';
+import Pop from '../utils/Pop.js';
+import { logger } from '../utils/Logger.js';
+import { favoriteService } from '../services/FavoriteService.js';
 
 
 defineProps({recipe: Recipe})
 const favorite = computed(()=> AppState.favorites.find(()=> favorite.value.recipeId == favorite.value.accountId))
 // const recipeImg = computed(()=>`url('${recipe.img}')`)
+
+async function favoriteRecipe(recipeId){
+    try {
+      const recipe = recipeId;
+      await favoriteService.favorite(recipe)
+    }
+    catch (error){
+      Pop.toast("Cannot favorite at this time", 'error');
+      logger.error("Unable to alter favorite", error)
+    }
+}
 
 function openModal(){
     
@@ -18,7 +32,7 @@ function openModal(){
         <div class="card rounded imgCard shadow m-0 p-0" :style="{backgroundImage: `url(${recipe.img})`}" @click="openModal()">
             <div class="d-flex justify-content-between align-items-center px-1 mb-5">
                 <span class="rounded bg-dark text-light opacity-75 p-1">{{ recipe.category }}</span>
-                <div class="rounded-bottom bg-dark text-light opacity-75 p-1"><i v-if="favorite"
+                <div class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="favoriteRecipe(recipe.id)"><i v-if="favorite"
                         class="mdi mdi-heart fs-4"></i><i v-else class="mdi mdi-heart-outline fs-4"></i></div>
             </div>
             <div class="card-body text-truncated d-flex align-content-end flex-wrap m-0 p-0">
