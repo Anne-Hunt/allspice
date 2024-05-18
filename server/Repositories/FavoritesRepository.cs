@@ -10,22 +10,22 @@ public class FavoritesRepository
 
     internal List<Favorite> GetFavorites(string userId)
     {
-        string sql = "SELECT * FROM favorites WHERE accountId = @userId;";
-        List<Favorite> favorites = _db.Query<Favorite>(sql).ToList();
+        string sql = "SELECT * FROM favorites WHERE favorites.CreatorId = @userId;";
+        List<Favorite> favorites = _db.Query<Favorite>(sql, new { userId }).ToList();
         return favorites;
     }
 
     internal Favorite GetFavoriteById(int favoriteId)
     {
-        string sql = "SELECT * FROM favorites WHERE id = @favoriteId;";
-        Favorite favorite = _db.Query<Favorite>(sql).FirstOrDefault();
+        string sql = "SELECT * FROM favorites WHERE favorites.id = @favoriteId;";
+        Favorite favorite = _db.Query<Favorite>(sql, new { favoriteId }).FirstOrDefault();
         return favorite;
     }
 
     internal void TrashFavorite(int favoriteId)
     {
         string sql = "DELETE FROM favorites WHERE favorites.Id = @favoriteId LIMIT 1;";
-        _db.Execute(sql);
+        _db.Execute(sql, new { favoriteId });
     }
 
     internal FavoriteRecipe CreateFavorite(Favorite favoriteData)

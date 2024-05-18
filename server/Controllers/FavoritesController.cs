@@ -15,15 +15,15 @@ public class FavoritesController : ControllerBase
         _auth0Provider = auth0Provider;
     }
 
-    [HttpGet]
-    public async Task<ActionResult<List<Favorite>>> GetFavorites()
+    [HttpDelete("{favoriteId}")]
+    public async Task<ActionResult<Favorite>> TrashFavorite(int favoriteId)
     {
         try
         {
             Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
             string userId = userInfo.Id;
-            List<Favorite> favorites = _favoritesService.GetFavorites(userId);
-            return favorites;
+            string message = _favoritesService.TrashFavorite(favoriteId, userId);
+            return Ok(message);
         }
         catch (Exception exception)
         {
@@ -32,7 +32,6 @@ public class FavoritesController : ControllerBase
     }
 
     [HttpPost]
-
     public async Task<ActionResult<FavoriteRecipe>> CreateFavorite([FromBody] Favorite favoriteData)
     {
         try
