@@ -9,7 +9,6 @@ import { favoriteService } from '../services/FavoriteService.js';
 
 defineProps({recipe: Recipe})
 const favorite = computed(()=> AppState.favorites.find(()=> favorite.value.recipeId == favorite.value.accountId))
-// const recipeImg = computed(()=>`url('${recipe.img}')`)
 
 async function favoriteRecipe(recipeId){
     try {
@@ -21,15 +20,11 @@ async function favoriteRecipe(recipeId){
       logger.error("Unable to alter favorite", error)
     }
 }
-
-function openModal(){
-    
-}
 </script>
 
 
 <template>
-        <div class="card rounded imgCard shadow m-0 p-0" :style="{backgroundImage: `url(${recipe.img})`}" @click="openModal()">
+        <div class="card rounded imgCard shadow m-0 p-0" :style="{backgroundImage: `url(${recipe.img})`}" data-bs-toggle="modal" :data-bs-target="recipe.id">
             <div class="d-flex justify-content-between align-items-center px-1 mb-5">
                 <span class="rounded bg-dark text-light opacity-75 p-1">{{ recipe.category }}</span>
                 <div class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="favoriteRecipe(recipe.id)"><i v-if="favorite"
@@ -42,7 +37,9 @@ function openModal(){
                 </div>
             </div>
         </div>
-
+<ModalWrapper :modalId="recipe.id">
+<RecipeDetails></RecipeDetails>
+</ModalWrapper>
 </template>
 
 
