@@ -10,6 +10,7 @@ import { favoriteService } from '../services/FavoriteService.js';
 const recipe = computed(()=>AppState.activeRecipe)
 const ingredients = computed(()=> AppState.ingredients)
 const favorite = computed(()=> AppState.favorites.find(()=> favorite.value.recipeId == favorite.value.accountId))
+const owner = computed(()=> AppState.activeRecipe.creatorId = AppState.account.id)
 
 async function favoriteRecipe(recipeId){
     try {
@@ -46,11 +47,12 @@ getIngredients()
             <img :src="recipe.img" :alt="recipe.title">
         </div>
         <div class="body row">
-            <div class="card-title">{{ recipe.title }}</div>
-            <div class="col-md-6 col-12">
+            <span class="card-title">{{ recipe.title }}</span>
+            <span v-if="owner" class="bg-dark opacity-75 text-light rounded p-1"><i class="mdi mdi-pencil"></i></span>
+            <div class="col-md-6 col-12 rounded">
                 <span>{{ recipe.instructions }}</span>
             </div>
-            <div class="col-md-6 col-12">
+            <div class="col-md-6 col-12 rounded">
                 <span v-for="ingredient in ingredients" :key="ingredient.id">{{ ingredient.quantity }} |
                     {{ ingredient.name }}</span>
             </div>

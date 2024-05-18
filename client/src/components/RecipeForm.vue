@@ -16,6 +16,7 @@ async function createRecipe(){
     try {
       const recipeData = recipe
       await recipeService.createRecipe(recipeData)
+      resetForm()
     }
     catch (error){
       Pop.toast("Unable to submit recipe", 'error');
@@ -27,12 +28,19 @@ async function updateRecipe(recipeId){
 try {
   const recipeData = recipe
   await recipeService.updateRecipe(recipeData, recipeId)
+  resetForm()
 }
 catch (error){
   Pop.toast("Unable to update recipe", 'error');
   logger.error("Unable to update recipe", error)
 }
 }
+
+function resetForm(){
+  recipe.value.title = '',
+  recipe.value.instructions= ''
+}
+
 </script>
 
 
