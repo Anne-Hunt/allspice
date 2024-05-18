@@ -1,6 +1,3 @@
-
-
-
 namespace allspice.Services;
 
 public class IngredientsService
@@ -23,6 +20,10 @@ public class IngredientsService
     internal Ingredient GetIngredientById(int ingredientId)
     {
         Ingredient ingredient = _repository.GetIngredientById(ingredientId);
+        if (ingredient == null)
+        {
+            throw new Exception("Unable to find!");
+        }
         return ingredient;
     }
 

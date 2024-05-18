@@ -12,41 +12,42 @@ public class IngredientsRepository
     internal Ingredient CreateIngredient(Ingredient ingredientData)
     {
         string sql = @"
-        INSERT INTO ingredients(
-            recipeId,
+        INSERT INTO 
+        ingredients(
             quantity,
-            name
+            name,
+            recipeId
         )VALUES(
-            @RecipeId,
             @Quantity,
-            @Name
+            @Name,
+            @RecipeId
         );
 
         SELECT *
         FROM ingredients
-        WHERE id = LAST_INSERT_ID
+        WHERE ingredients.id = LAST_INSERT_ID()
         ;";
-        Ingredient ingredient = _db.Query(sql, ingredientData).FirstOrDefault();
+        Ingredient ingredient = _db.Query<Ingredient>(sql, ingredientData).FirstOrDefault();
         return ingredient;
     }
 
     internal Ingredient GetIngredientById(int ingredientId)
     {
         string sql = "SELECT * FROM ingredients WHERE id = @ingredientId;";
-        Ingredient ingredient = _db.Query<Ingredient>(sql).FirstOrDefault();
+        Ingredient ingredient = _db.Query<Ingredient>(sql, new { ingredientId }).FirstOrDefault();
         return ingredient;
     }
 
     internal List<Ingredient> GetIngredients(int recipeId)
     {
         string sql = @"SELECT * FROM ingredients WHERE recipeId = @recipeId;";
-        List<Ingredient> ingredients = _db.Query<Ingredient>(sql).ToList();
+        List<Ingredient> ingredients = _db.Query<Ingredient>(sql, new { recipeId }).ToList();
         return ingredients;
     }
 
     internal void TrashIngredient(int ingredientId)
     {
-        string sql = "DELETE * FROM ingredients WHERE id = @ingredientId LIMIT 1;";
+        string sql = "DELETE FROM ingredients WHERE ingredients.id = @ingredientId;";
         _db.Execute(sql, new { ingredientId });
     }
 }
