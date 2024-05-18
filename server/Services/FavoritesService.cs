@@ -23,16 +23,16 @@ public class FavoritesService
         return favorite;
     }
 
-    internal Favorite CreateFavorite(int recipeId, string userId)
+    internal FavoriteRecipe CreateFavorite(Favorite favoriteData)
     {
-        Favorite favorite = _repository.CreateFavorite(recipeId, userId);
+        FavoriteRecipe favorite = _repository.CreateFavorite(favoriteData);
         return favorite;
     }
 
     internal string TrashFavorite(int favoriteId, string userId)
     {
         Favorite favorite = GetFavoriteById(favoriteId);
-        if (favorite.AccountId != userId)
+        if (favorite.CreatorId != userId)
         {
             throw new Exception("You cannot delete what you don't have!");
         }

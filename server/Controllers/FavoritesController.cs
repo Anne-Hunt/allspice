@@ -31,15 +31,16 @@ public class FavoritesController : ControllerBase
         }
     }
 
-    [HttpDelete("{favoriteId}")]
-    public async Task<ActionResult<Favorite>> TrashFavorite(int favoriteId)
+    [HttpPost]
+
+    public async Task<ActionResult<FavoriteRecipe>> CreateFavorite([FromBody] Favorite favoriteData)
     {
         try
         {
             Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-            string userId = userInfo.Id;
-            string message = _favoritesService.TrashFavorite(favoriteId, userId);
-            return Ok(message);
+            favoriteData.CreatorId = userInfo.Id;
+            FavoriteRecipe favorite = _favoritesService.CreateFavorite(favoriteData);
+            return favorite;
         }
         catch (Exception exception)
         {
