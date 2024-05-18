@@ -1,3 +1,5 @@
+using System.Data.Common;
+
 namespace allspice.Services;
 
 public class IngredientsService
@@ -27,8 +29,15 @@ public class IngredientsService
         return ingredient;
     }
 
-    internal Ingredient CreateIngredient(Ingredient ingredientData)
+    internal Ingredient CreateIngredient(Ingredient ingredientData, string userId)
     {
+        int RecipeId = ingredientData.RecipeId;
+        Recipe recipe = _recipeService.GetRecipeById(RecipeId);
+        string creatorId = recipe.CreatorId;
+        if (userId != creatorId)
+        {
+            throw new Exception("You cannot change what you have not made!");
+        }
         Ingredient ingredient = _repository.CreateIngredient(ingredientData);
         return ingredient;
     }

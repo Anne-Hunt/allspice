@@ -30,17 +30,15 @@ public class AccountController : ControllerBase
     }
   }
 
-
-  [HttpDelete("{favoriteId}")]
-  [Authorize]
-  public async Task<ActionResult<Favorite>> TrashFavorite(int favoriteId)
+  [HttpGet("favorites")]
+  public async Task<ActionResult<List<Favorite>>> GetFavorites()
   {
     try
     {
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
       string userId = userInfo.Id;
-      string message = _favoritesService.TrashFavorite(favoriteId, userId);
-      return Ok(message);
+      List<Favorite> favorites = _favoritesService.GetFavorites(userId);
+      return favorites;
     }
     catch (Exception exception)
     {
