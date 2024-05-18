@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { reactive } from 'vue'
 import { Recipe } from './models/Recipe.js'
 import { Ingredient } from './models/Ingredient.js'
@@ -23,5 +24,11 @@ export const AppState = reactive({
   activeRecipe: null,
 
 /**@type {Profile} */
-activeProfile: null
+activeProfile: null,
+
+/**@type {Ingredient} */
+activeIngredient: null,
+
+/**@type {Favorite} */
+activeFavorite: null
 })
