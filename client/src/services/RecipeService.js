@@ -1,9 +1,15 @@
 import { AppState } from "../AppState.js"
+import { Ingredient } from "../models/Ingredient.js"
 import { Recipe } from "../models/Recipe.js"
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
 class RecipeService {
+    async getIngredientsByRecipe(recipeId) {
+        const response = await api.get(`api/${recipeId}/instructions`)
+        const ingredients = response.data.map(ingredientData => new Ingredient(ingredientData))
+        AppState.ingredients = ingredients
+    }
     async getRecipeById(recipeId) {
         const response = await api.get(`api/recipes/${recipeId}`)
         const recipe = new Recipe(response.data)
