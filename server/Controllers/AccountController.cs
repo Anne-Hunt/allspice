@@ -24,9 +24,9 @@ public class AccountController : ControllerBase
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
       return Ok(_accountService.GetOrCreateProfile(userInfo));
     }
-    catch (Exception e)
+    catch (Exception exception)
     {
-      return BadRequest(e.Message);
+      return BadRequest(exception.Message);
     }
   }
 

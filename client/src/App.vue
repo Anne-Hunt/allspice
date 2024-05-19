@@ -1,7 +1,5 @@
 <script setup>
-import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
-import RecipeForm from './components/RecipeForm.vue';
 
 
 </script>
@@ -16,9 +14,6 @@ import RecipeForm from './components/RecipeForm.vue';
   <footer class="text-end p-2">
     <button class="btn btn-success rounded-circle" type="button"  data-bs-toggle="modal" data-bs-target="recipeFormModal"><i class="mdi mdi-plus fs-1 text-light"></i></button>
   </footer>
-  <!-- <ModalWrapper id="recipeFormModal"> -->
-    <!-- <RecipeForm></RecipeForm> -->
-  <!-- </ModalWrapper> -->
 </template>
 
 <style lang="scss">

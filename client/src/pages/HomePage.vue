@@ -4,6 +4,7 @@ import { AppState } from '../AppState.js';
 import { recipeService } from '../services/RecipeService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
+import { accountService } from '../services/AccountService.js';
 
 
 const recipes = computed(()=>AppState.recipes)
@@ -17,12 +18,27 @@ async function getRecipes(){
   }
 }
 
+
 function filter(){
 
 }
 
+// async function getFavorites(){
+//   try {
+//     if(!AppState.account){
+//       return
+//     }
+//     await accountService.getFavorites()
+//   }
+//   catch (error){
+//     Pop.toast("Unable to get favorites", 'error');
+//     logger.error("Unable to get favorites", error)
+//   }
+// }
+
 onMounted(()=>
-{getRecipes()})
+  {getRecipes()
+})
 </script>
 
 <template>
