@@ -36,6 +36,12 @@ function toggleTheme() {
           </router-link>
         </li>
       </ul>
+      <div class="d-flex align-items-center">
+        <div class="input-group input-group-sm">
+          <input type="text" class="form-control" aria-label="search-input" aria-describedby="search-input-label">
+          <span class="input-group-text bg-success" id="search-input-label">SEARCH</span>
+</div>
+      </div>
       <!-- LOGIN COMPONENT HERE -->
       <div>
         <button class="btn text-light" @click="toggleTheme"

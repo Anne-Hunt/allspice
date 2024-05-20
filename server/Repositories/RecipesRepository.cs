@@ -112,21 +112,22 @@ public class RecipesRepository
         string sql = @"
         SELECT
         recipes.*,
+        accounts_1.*,
         favorites.*,
-        accounts.*
-        FROM 
-        recipes
+        accounts_2.*
+        FROM recipes
+        JOIN accounts AS accounts_1
+        ON accounts_1.Id = recipes.CreatorId
         JOIN favorites
-        ON favorites.RecipeId = recipes.Id
-        JOIN accounts 
-        ON accounts.Id = recipes.CreatorId
-        JOIN accounts
-        ON favorites.CreatorId = @accountId;";
+        ON recipes.Id = favorites.RecipeId
+        JOIN accounts AS accounts_2
+        ON favorites.CreatorId = accounts_2.Id";
 
-        List<RecipeFan> recipes = _db.Query<RecipeFan, Favorite, Profile, Profile, RecipeFan>(sql, (recipeFan, favorite, profile, fan) =>
+        List<RecipeFan> recipes = _db.Query<RecipeFan, Profile, Favorite, Profile, RecipeFan>(sql, (recipeFan, profile, favorite, fan) =>
         {
-            recipeFan.Id = favorite.RecipeId;
             recipeFan.Creator = profile;
+            recipeFan.Id = favorite.RecipeId;
+            recipeFan.Favorite = favorite;
             recipeFan.Fan = profile;
             return recipeFan;
         }, new { accountId }).ToList();
