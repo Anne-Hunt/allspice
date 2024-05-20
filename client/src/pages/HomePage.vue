@@ -9,9 +9,9 @@ import { accountService } from '../services/AccountService.js';
 
 const recipes = computed(()=>AppState.recipes)
 
-async function getRecipes(){
+async function getRecipesWithFavorites(){
   try {
-    await recipeService.getRecipes()
+    await recipeService.getRecipesWithFavorites()
   } catch (error) {
     Pop.toast("Unable to get recipes", 'error')
     logger.error("Unable to get recipes", error)
@@ -37,7 +37,7 @@ function filter(){
 // }
 
 onMounted(()=>
-  {getRecipes()
+  {getRecipesWithFavorites()
 })
 </script>
 

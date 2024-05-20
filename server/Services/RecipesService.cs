@@ -59,4 +59,14 @@ public class RecipesService
         _repository.TrashRecipe(recipeId);
         return "Recipe removed from database!";
     }
+
+    internal List<RecipeFan> GetRecipesWithFavorites(string userId)
+    {
+        if (userId == null)
+        {
+            GetRecipes();
+        }
+        List<RecipeFan> recipes = _repository.GetRecipesWithFavorites(userId);
+        return recipes;
+    }
 }

@@ -66,6 +66,22 @@ public class RecipesController : ControllerBase
     }
 
     [Authorize]
+    [HttpGet("{accountId}/favorites")]
+    public async Task<ActionResult<List<RecipeFan>>> GetRecipesWithFavorites(string accountId)
+    {
+        try
+        {
+            Account user = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+            List<RecipeFan> recipes = _recipesService.GetRecipesWithFavorites(user.Id);
+            return recipes;
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
+
+    [Authorize]
     [HttpPut("{recipeId}")]
     public async Task<ActionResult<Recipe>> UpdateRecipe([FromBody] Recipe recipeData, int recipeId)
     {

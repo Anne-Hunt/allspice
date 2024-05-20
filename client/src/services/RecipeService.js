@@ -5,6 +5,17 @@ import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
 class RecipeService {
+    async getRecipesWithFavorites() {
+        if (AppState.account == null){
+            this.getRecipes()
+        }
+        const accountId = AppState.account.id
+      const response = await api.get(`api/recipes/${accountId}/favorites`)
+      const recipes = response.data.map(recipe => new Recipe(recipe))
+      AppState.recipes = recipes
+      logger.log(recipes)
+    //   AppState.favorites = AppState.recipes.filter(recipe.favorite.CreatorId == accountId)
+    }
     async getIngredientsByRecipe(recipeId) {
         const response = await api.get(`api/${recipeId}/instructions`)
         const ingredients = response.data.map(ingredientData => new Ingredient(ingredientData))

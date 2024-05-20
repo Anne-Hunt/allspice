@@ -1,8 +1,3 @@
-
-
-
-
-
 namespace allspice.Repositories;
 
 public class RecipesRepository
@@ -95,7 +90,7 @@ public class RecipesRepository
         recipes.*,
         accounts.*
         FROM recipes
-        JOIN accounts on accounts.id = recipes.creatorId
+        JOIN accounts ON accounts.id = recipes.creatorId
         WHERE recipes.id = @Id;";
 
         Recipe recipe = _db.Query<Recipe, Profile, Recipe>(sql, (recipe, profile) =>
@@ -110,5 +105,31 @@ public class RecipesRepository
     {
         string sql = "DELETE FROM recipes WHERE recipes.id = @recipeId;";
         _db.Execute(sql, new { recipeId });
+    }
+
+    internal List<RecipeFan> GetRecipesWithFavorites(string accountId)
+    {
+        string sql = @"
+        SELECT
+        recipes.*,
+        favorites.*,
+        accounts.*
+        FROM 
+        recipes
+        JOIN favorites
+        ON favorites.RecipeId = recipes.Id
+        JOIN accounts 
+        ON accounts.Id = recipes.CreatorId
+        JOIN accounts
+        ON favorites.CreatorId = @accountId;";
+
+        List<RecipeFan> recipes = _db.Query<RecipeFan, Favorite, Profile, Profile, RecipeFan>(sql, (recipeFan, favorite, profile, fan) =>
+        {
+            recipeFan.Id = favorite.RecipeId;
+            recipeFan.Creator = profile;
+            recipeFan.Fan = profile;
+            return recipeFan;
+        }, new { accountId }).ToList();
+        return recipes;
     }
 }
