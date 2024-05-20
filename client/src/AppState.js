@@ -4,6 +4,7 @@ import { Recipe } from './models/Recipe.js'
 import { Ingredient } from './models/Ingredient.js'
 import { Favorite } from './models/Favorite.js'
 import { Profile } from './models/Profile.js'
+import { RecipeFan } from './models/RecipeFan.js'
 
 export const AppState = reactive({
   /**@type {import('@bcwdev/auth0provider-client').Identity} */
@@ -19,6 +20,9 @@ export const AppState = reactive({
 
   /**@type {Favorite[]} */
   favorites: [],
+
+  /**@type {RecipeFan[]} */
+  recipeFans: [],
 
   /**@type {Recipe} */
   activeRecipe: null,

@@ -9,9 +9,9 @@ import { accountService } from '../services/AccountService.js';
 
 const recipes = computed(()=>AppState.recipes)
 
-async function getRecipesWithFavorites(){
+async function getRecipes(){
   try {
-    await recipeService.getRecipesWithFavorites()
+    await recipeService.getRecipes()
   } catch (error) {
     Pop.toast("Unable to get recipes", 'error')
     logger.error("Unable to get recipes", error)
@@ -23,21 +23,22 @@ function filter(){
 
 }
 
-// async function getFavorites(){
-//   try {
-//     if(!AppState.account){
-//       return
-//     }
-//     await accountService.getFavorites()
-//   }
-//   catch (error){
-//     Pop.toast("Unable to get favorites", 'error');
-//     logger.error("Unable to get favorites", error)
-//   }
-// }
+async function getFavorites(){
+  try {
+    if(!AppState.account){
+      return
+    }
+    await accountService.getFavorites()
+  }
+  catch (error){
+    Pop.toast("Unable to get favorites", 'error');
+    logger.error("Unable to get favorites", error)
+  }
+}
 
 onMounted(()=>
-  {getRecipesWithFavorites()
+  {getRecipes()
+    getFavorites()
 })
 </script>
 

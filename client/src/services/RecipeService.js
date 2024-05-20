@@ -1,6 +1,7 @@
 import { AppState } from "../AppState.js"
 import { Ingredient } from "../models/Ingredient.js"
 import { Recipe } from "../models/Recipe.js"
+import { RecipeFan } from "../models/RecipeFan.js"
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
@@ -11,8 +12,8 @@ class RecipeService {
         }
         const accountId = AppState.account.id
       const response = await api.get(`api/recipes/${accountId}/favorites`)
-      const recipes = response.data.map(recipe => new Recipe(recipe))
-      AppState.recipes = recipes
+      const recipes = response.data.map(recipe => new RecipeFan(recipe))
+      AppState.recipeFans = recipes
       logger.log(recipes)
     //   AppState.favorites = AppState.recipes.filter(recipe.favorite.CreatorId == accountId)
     }
