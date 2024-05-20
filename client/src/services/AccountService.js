@@ -3,6 +3,7 @@ import { Account } from '../models/Account.js'
 import { Favorite } from '../models/Favorite.js'
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
+import { recipeService } from './RecipeService.js'
 
 class AccountService {
   async getAccount() {
@@ -10,6 +11,7 @@ class AccountService {
       const res = await api.get('/account')
       AppState.account = new Account(res.data)
       this.getFavorites()
+      recipeService.getRecipesWithFavorites()
     } catch (err) {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
