@@ -6,8 +6,9 @@ import { recipeService } from '../services/RecipeService.js';
 import { AppState } from '../AppState.js';
 
 const activeRecipe = computed(()=> AppState.activeRecipe)
-
-const recipe = ref({
+const user = computed(()=>AppState.account)
+const recipeData = {}
+const recipeInput = ref({
     title: '',
     img: '',
     category: '',
@@ -16,7 +17,11 @@ const recipe = ref({
 
 async function createRecipe(){
     try {
-      const recipeData = recipe
+      recipeData.title = recipeInput.value.title
+      recipeData.img = recipeInput.value.img
+      recipeData.category = recipeInput.value.category
+      recipeData.instructions = recipeInput.value.instructions
+      recipeData.creatorId = user.value.id
       await recipeService.createRecipe(recipeData)
 
     }
@@ -28,9 +33,8 @@ async function createRecipe(){
 
 async function updateRecipe(recipeId){
 try {
-  const recipeData = recipe
+  const recipeData = recipeInput
   await recipeService.updateRecipe(recipeData, recipeId)
-  resetForm()
 }
 catch (error){
   Pop.toast("Unable to update recipe", 'error');
@@ -39,8 +43,10 @@ catch (error){
 }
 
 function resetForm(){
-  recipe.value.title = '',
-  recipe.value.instructions= ''
+  recipeInput.value.title = '',
+  recipeInput.value.instructions= ''
+  recipeInput.value.category = ''
+  recipeInput.value.img = ''
 }
 
 onUnmounted(()=>{
@@ -50,61 +56,72 @@ onUnmounted(()=>{
 
 
 <template>
-<form v-if="activeRecipe == null" @submit.prevent="createRecipe()">
-  <div class="mb-3">
-    <label for="title" class="form-label">Recipe Title</label>
-    <input v-modal="recipe.title" type="text" class="form-control" id="titleInput" placeholder="">
-  </div>
-  <div class="mb-3 row">
-    <div class="col">
-      <label for="image" class="form-label">Image</label>
-      <input v-modal="recipe.img" type="text" class="form-control" id="imgInput" placeholder="">
+  <div class="card">
+    <div class="card-header bg-success">
+      <div v-if="activeRecipe == null">Create Recipe</div>
+      <h2 v-else>Update Recipe</h2>
     </div>
-    <div class="col">
-      <label for="category" class="form-label">Category</label>
-      <select v-modal="recipe.category" class="form-select" id="categoryInput" aria-label="select-category">
-        <option value="breakfast">Breakfast</option>
-        <option value="lunch">Lunch</option>
-        <option value="dinner">Dinner</option>
-        <option value="snacks">Snacks</option>
-        <option value="dessert">Dessert</option>
-      </select>
+    <div class="card-body">
+      <form v-if="activeRecipe == null" @submit.prevent="createRecipe()">
+        <div class="mb-3">
+          <label for="title" class="form-label">Recipe Title</label>
+          <input v-model="recipeInput.title" type="text" class="form-control" id="titleInput" placeholder="">
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <label for="image" class="form-label">Image</label>
+            <input v-model="recipeInput.img" type="text" class="form-control" id="imgInput" placeholder="">
+          </div>
+          <div class="col">
+            <label for="category" class="form-label">Category</label>
+            <select v-model="recipeInput.category" class="form-select" id="categoryInput" aria-label="select-category">
+              <option value="breakfast">Breakfast</option>
+              <option value="lunch">Lunch</option>
+              <option value="dinner">Dinner</option>
+              <option value="snacks">Snacks</option>
+              <option value="dessert">Dessert</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="instructions" class="form-label">Instructions</label>
+          <textarea v-model="recipeInput.instructions" class="form-control" id="instructionsInput" rows="5"></textarea>
+        </div>
+      </form>
+      <form v-else @submit.prevent="updateRecipe()">
+        <div class="mb-3">
+          <label for="title" class="form-label">Recipe Title</label>
+          <input v-model="recipeInput.title" type="text" class="form-control" id="titleInput" :placeholder="activeRecipe.title">
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <label for="image" class="form-label">Image</label>
+            <input v-model="recipeInput.img" type="text" class="form-control" id="imgInput" :placeholder="activeRecipe.img">
+          </div>
+          <div class="col">
+            <label for="category" class="form-label">Category</label>
+            <select v-model="recipeInput.category" class="form-select" id="categoryInput" aria-label="select-category">
+              <option value="breakfast">Breakfast</option>
+              <option value="lunch">Lunch</option>
+              <option value="dinner">Dinner</option>
+              <option value="snacks">Snacks</option>
+              <option value="dessert">Dessert</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="instructions" class="form-label">Instructions</label>
+          <textarea v-model="recipeInput.instructions" class="form-control" id="instructionsInput" rows="5" :placeholder="activeRecipe.instructions"></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer bg-success opacity-50">
+      <button v-if="activeRecipe == null" class="btn btn-outline-dark" type="submit" id="createButton">Submit</button>
+      
+      <button v-else class="btn btn-outline-dark" type="submit" id="updateButton">Update</button>
     </div>
   </div>
-  <div class="mb-3">
-    <label for="instructions" class="form-label">Instructions</label>
-    <textarea v-modal="recipe.instructions" class="form-control" id="instructionsInput" rows="5"></textarea>
-  </div>
-  <button class="btn btn-outline-secondary" type="submit" id="ingredientButton">Submit</button>
-</form>
 
-<form v-else @submit.prevent="updateRecipe()">
-  <div class="mb-3">
-    <label for="title" class="form-label">Recipe Title</label>
-    <input v-modal="recipe.title" type="text" class="form-control" id="titleInput" :placeholder="activeRecipe.title">
-  </div>
-  <div class="mb-3 row">
-    <div class="col">
-      <label for="image" class="form-label">Image</label>
-      <input v-modal="recipe.img" type="text" class="form-control" id="imgInput" :placeholder="activeRecipe.img">
-    </div>
-    <div class="col">
-      <label for="category" class="form-label">Category</label>
-      <select v-modal="recipe.category" class="form-select" id="categoryInput" aria-label="select-category">
-        <option value="breakfast">Breakfast</option>
-        <option value="lunch">Lunch</option>
-        <option value="dinner">Dinner</option>
-        <option value="snacks">Snacks</option>
-        <option value="dessert">Dessert</option>
-      </select>
-    </div>
-  </div>
-  <div class="mb-3">
-    <label for="instructions" class="form-label">Instructions</label>
-    <textarea v-modal="recipe.instructions" class="form-control" id="instructionsInput" rows="5" :placeholder="activeRecipe.instructions"></textarea>
-    <button class="btn btn-outline-secondary" type="submit" id="ingredientButton">Update</button>
-  </div>
-</form>
 </template>
 
 
