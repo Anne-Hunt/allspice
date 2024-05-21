@@ -38,5 +38,6 @@ CREATE TABLE IF NOT EXISTS favorites(
   recipeId INT NOT NULL,
   creatorId VARCHAR(255) NOT NULL,
   FOREIGN KEY (recipeId) REFERENCES recipes (id) ON DELETE CASCADE,
-  FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
+  FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE,
+  UNIQUE(recipeId, creatorId)
 )
