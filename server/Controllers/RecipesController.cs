@@ -38,6 +38,7 @@ public class RecipesController : ControllerBase
         }
     }
 
+    [HttpGet]
     public ActionResult<List<Recipe>> GetRecipes()
     {
         try

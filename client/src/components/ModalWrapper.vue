@@ -15,7 +15,7 @@ import { AppState } from '../AppState.js';
       </div>
       <div class="row modal-body justify-content-center">
         <div class="col-6 card-body"><RecipeForm/></div>
-        <div v-if="AppState.activeRecipe" class="col-6 card-body"><IngredientForm/></div>
+        <div v-if="AppState.activeRecipe" class="col-6 card-body"><IngredientsDetails/><IngredientForm/></div>
       </div>
     </div>
   </div>
