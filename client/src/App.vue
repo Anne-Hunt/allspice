@@ -1,6 +1,10 @@
 <script setup>
+import { ref } from 'vue';
 
 
+const modalId = ref({
+  id: ''
+})
 </script>
 
 <template>
@@ -9,9 +13,10 @@
   <main>
     <router-view />
   </main>
-  <footer class="text-end p-2">
-    <button class="btn btn-success rounded-circle" type="button"  data-bs-toggle="modal" data-bs-target="recipeFormModal"><i class="mdi mdi-plus fs-1 text-light"></i></button>
+  <footer class="text-end p-2 sticky-bottom">
+    <button class="btn btn-success rounded-circle" type="button"  data-bs-toggle="modal" :data-bs-target="modalId" @click="modalId.id = 'create'"><i class="mdi mdi-plus fs-3 text-light"></i></button>
   </footer>
+  <ModalWrapper :id="modalId.id"/>
 </template>
 
 <style lang="scss">

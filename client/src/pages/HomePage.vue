@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState.js';
 import { recipeService } from '../services/RecipeService.js';
 import { logger } from '../utils/Logger.js';
@@ -7,8 +7,18 @@ import Pop from '../utils/Pop.js';
 import { accountService } from '../services/AccountService.js';
 import Navbar from '../components/Navbar.vue';
 
+const recipes = computed(()=>{
+  if(filterBy.value == 'all') {return AppState.recipes}
+  if(filterBy.value == 'favorites') {return AppState.recipeFans.filter(recipe => recipe.favorite.creatorId == AppState.account.id)}
+  if(filterBy.value == 'created'){return AppState.recipes.filter(recipe => recipe.creatorId == AppState.account.id)} else
+  return AppState.recipes.filter(recipe => recipe.category == filterBy.value)})
 
-const recipes = computed(()=>AppState.recipes)
+const filterBy = ref('all')
+// const filters = [
+//   {name: 'all'},
+//   {name: 'favorites'},
+//   {name: 'created'},
+// ]
 
 async function getRecipes(){
   try {
@@ -17,11 +27,6 @@ async function getRecipes(){
     Pop.toast("Unable to get recipes", 'error')
     logger.error("Unable to get recipes", error)
   }
-}
-
-
-function filter(){
-
 }
 
 async function getFavorites(){
@@ -51,9 +56,9 @@ onMounted(()=>
   <div class="row justify-content-center mb-4">
       <div class="col-6 shadow overlay">
         <div class="row p-3 bg-light text-success align-items-end">
-          <div class="col text-center" @click="filter()">Home</div>
-          <div class="col text-center" @click="filter()">My Recipes</div>
-          <div class="col text-center" @click="filter()">Favorites</div>
+          <div class="col text-center" type="button" @click="filterBy = 'all'">Home</div>
+          <div class="col text-center" type="button" @click="filterBy = 'created'">My Recipes</div>
+          <div class="col text-center" type="button" @click="filterBy = 'favorites'">Favorites</div>
         </div>
       </div>
     </div>
