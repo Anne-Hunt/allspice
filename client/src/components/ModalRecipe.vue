@@ -1,7 +1,5 @@
 <script setup>
 import { Recipe } from '../models/Recipe.js';
-import IngredientsDetails from './IngredientsDetails.vue';
-import RecipeDetails from './RecipeDetails.vue';
 
 
 defineProps({recipe: Recipe})

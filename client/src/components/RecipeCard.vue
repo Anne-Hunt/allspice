@@ -3,19 +3,17 @@ import { Recipe } from '../models/Recipe.js';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 import { favoriteService } from '../services/FavoriteService.js';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { AppState } from '../AppState.js';
 import { Favorite } from '../models/Favorite.js';
 import { RecipeFan } from '../models/RecipeFan.js';
 import ModalRecipe from './ModalRecipe.vue';
 
-// const props = defineProps({recipe: Recipe, favorite: Favorite})
-defineProps({recipe: Recipe, favorite: Favorite, recipeFan: RecipeFan})
-// const favorites = computed(findFavorite)
+
+const props = defineProps({recipe: Recipe, favorite: Favorite, recipeFan: RecipeFan})
+
 const account = computed(()=>AppState.account)
-const fave = ref({
-    id: 0
-})
+const favorited = computed(()=> AppState.favorites.find(favorite => favorite.recipeId == `${props.recipe.id}`))
 
 async function favoriteRecipe(recipeId){
     try {
@@ -52,9 +50,9 @@ async function removeFavorite(recipeId){
             <div class="d-flex justify-content-between align-items-center px-1 mb-5">
                 <span class="rounded bg-dark text-light opacity-75 p-1">{{ recipe?.category }}</span>
                 <div v-if="account">
-                    <div v-if="fave.id = 0" class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="removeFavorite(recipe?.id)">
-                        <i class="mdi mdi-heart-outline fs-4"></i></div>
-                        <div v-else class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="favoriteRecipe(recipe?.id)"><i class="mdi mdi-heart fs-4"></i></div>
+                    <div v-if="favorited != null" class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="removeFavorite(recipe?.id)">
+                        <i class="mdi mdi-heart fs-4 text-danger"></i></div>
+                        <div v-else-if="favorited == null" class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="favoriteRecipe(recipe?.id)"><i class="mdi mdi-heart-outline fs-4"></i></div>
                     </div>
                 </div>
                 <div class="card-body text-truncated d-flex align-content-end flex-wrap m-0 p-0">
@@ -64,7 +62,7 @@ async function removeFavorite(recipeId){
                     </div>
                 </div>
             </div>
-        <ModalRecipe/>
+        <ModalRecipe :id="`#modal-${recipe?.id}`"/>
 </template>
 
 
