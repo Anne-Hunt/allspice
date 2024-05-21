@@ -21,7 +21,7 @@ function toggleTheme() {
   <nav class="navbar navbar-expand-sm px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <i class="mdi mdi-noodles fs-1"></i>
+        <i class="mdi mdi-noodles fs-1 text-light"></i>
       </div>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -39,14 +39,14 @@ function toggleTheme() {
       <div class="d-flex align-items-center">
         <div class="input-group input-group-sm">
           <input type="text" class="form-control" aria-label="search-input" aria-describedby="search-input-label">
-          <span class="input-group-text bg-success" id="search-input-label">SEARCH</span>
+          <span class="input-group-text" id="search-input-label"><i class="mdi mdi-magnify fs-5 text-success"></i></span>
 </div>
       </div>
       <!-- LOGIN COMPONENT HERE -->
       <div>
         <button class="btn text-light" @click="toggleTheme"
           :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
-          <i class="mdi" :class="theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></i>
+          <i class="mdi" :class="theme == 'light' ? 'mdi-weather-sunny fs-1' : 'mdi-weather-night fs-1'"></i>
         </button>
       </div>
       <Login />
