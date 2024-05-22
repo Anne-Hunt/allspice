@@ -35,9 +35,11 @@ function closeAndReset(){
             <div v-if="AppState.newRecipe" class="rounded-start-bottom imgCard col-md-4"
               :style="{backgroundImage: `url(${AppState.newRecipe.img})`} "></div>
             <div class="col-md-4 col-10 my-2">
+              <h5>Recipe</h5>
               <RecipeForm />
             </div>
             <div v-if="AppState.newRecipe" class="col-md-4 col-10 my-2">
+              <h5>Ingredients</h5>
               <IngredientForm />
             </div>
             </div>
