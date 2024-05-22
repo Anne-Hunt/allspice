@@ -47,7 +47,7 @@ async function setActiveRecipe(recipeId){
 
 <template>
     
-    <div class="card rounded imgCard shadow m-0 p-0" :style="{backgroundImage: `url(${recipe?.img})`}" type="button"   data-bs-toggle="modal" data-bs-target="#recipeModal" @click="setActiveRecipe(recipe.id)">
+    <div class="card rounded imgCard shadow m-0 p-0 w-100" :style="{backgroundImage: `url(${recipe?.img})`}" type="button"   data-bs-toggle="modal" data-bs-target="#recipeModal" @click="setActiveRecipe(recipe.id)">
             <div class="d-flex justify-content-between align-items-center px-1 mb-5">
                 <span class="rounded bg-dark text-light opacity-75 p-1">{{ recipe?.category }}</span>
                 <div v-if="account">
