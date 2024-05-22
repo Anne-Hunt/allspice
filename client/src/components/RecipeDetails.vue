@@ -35,27 +35,29 @@ async function removeFavorite(recipeId){
 
 
 <template>
-    <div class="card rounded">
-        <div class="card-image-start rounded-start">
-          <div v-if="account">
-                    <div v-if="favorited != null" class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="removeFavorite(recipe?.id)">
-                        <i class="mdi mdi-heart fs-4 text-danger"></i></div>
-                        <div v-else-if="favorited == null" class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="favoriteRecipe(recipe?.id)"><i class="mdi mdi-heart-outline fs-4"></i></div>
-                    </div>
-            <img :src="recipe?.img" :alt="recipe?.title">
-        </div>
-        <div class="body row">
-            <span class="card-title">{{ recipe?.title }}</span>
-            <!-- <span v-if="owner" class="bg-dark opacity-75 text-light rounded p-1"><i class="mdi mdi-pencil"></i></span> -->
-            <div class="col-md-6 col-12 rounded">
-                <span>{{ recipe?.instructions }}</span>
-            </div>
-            <div class="col-md-6 col-12 rounded">
-                <span v-for="ingredient in ingredients" :key="ingredient?.id">{{ ingredient?.quantity }} |
-                    {{ ingredient?.name }}</span>
-            </div>
-        </div>
+  <div class="card rounded">
+    <div class="card-image-start rounded-start">
+      <div v-if="account">
+        <div v-if="favorited != null" class="rounded-bottom bg-dark text-light opacity-75 p-1"
+          @click="removeFavorite(recipe?.id)">
+          <i class="mdi mdi-heart fs-4 text-danger"></i></div>
+        <div v-else-if="favorited == null" class="rounded-bottom bg-dark text-light opacity-75 p-1"
+          @click="favoriteRecipe(recipe?.id)"><i class="mdi mdi-heart-outline fs-4"></i></div>
+      </div>
+      <img :src="recipe?.img" :alt="recipe?.title">
     </div>
+    <div class="body row">
+      <span class="card-title">{{ recipe?.title }}</span>
+      <span v-if="owner" class="bg-dark opacity-75 text-light rounded p-1"><i class="mdi mdi-pencil"></i></span>
+      <div class="col-md-6 col-12 rounded">
+        <span>{{ recipe?.instructions }}</span>
+      </div>
+      <div class="col-md-6 col-12 rounded">
+        <span v-for="ingredient in ingredients" :key="ingredient?.id">{{ ingredient?.quantity }} |
+          {{ ingredient?.name }}</span>
+      </div>
+    </div>
+  </div>
 </template>
 
 

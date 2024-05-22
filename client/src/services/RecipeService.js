@@ -28,8 +28,9 @@ class RecipeService {
     //   AppState.favorites = AppState.recipes.filter(recipe.favorite.CreatorId == accountId)
     }
     async getIngredientsByRecipe(recipeId) {
-        const response = await api.get(`api/${recipeId}/instructions`)
+        const response = await api.get(`api/recipes/${recipeId}/ingredients`)
         const ingredients = response.data.map(ingredientData => new Ingredient(ingredientData))
+        logger.log(ingredients, response)
         AppState.ingredients = ingredients
     }
     async getRecipeById(recipeId) {

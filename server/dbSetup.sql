@@ -41,3 +41,5 @@ CREATE TABLE IF NOT EXISTS favorites(
   FOREIGN KEY (creatorId) REFERENCES accounts (id) ON DELETE CASCADE,
   UNIQUE(recipeId, creatorId)
 )
+
+DROP TABLE recipes
