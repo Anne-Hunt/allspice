@@ -42,4 +42,4 @@ CREATE TABLE IF NOT EXISTS favorites(
   UNIQUE(recipeId, creatorId)
 )
 
-DROP TABLE recipes
+DROP TABLE favorites
