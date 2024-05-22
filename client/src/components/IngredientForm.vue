@@ -68,7 +68,7 @@ function resetForm(){
         <form v-for="ingredient in ingredients" :key="ingredient.id" @submit.prevent="updateIngredient(ingredient.id)">
           <div class="input-group mb-3">
             <input v-model="ingredient.quantity" type="text" class="form-control" :placeholder="ingredient.quantity" aria-label="Quantity">
-            <input v-model="ingredient.name" type="text" class="form-control" :placeholder="ingredient.name" aria-label="Name" maxlength="250" aria-describedby="ingredientButton" name="ingredient" id="ingredient">
+            <input v-model="ingredient.name" type="text" class="form-control" :placeholder="ingredient.name" aria-label="Name" maxlength="250" aria-describedby="ingredientButton" name="ingredient" :id="ingredient.name">
             <button class="btn btn-outline-primary p-0" type="submit" id="ingredientButton"><small><i class="mdi mdi-pencil"></i></small></button>
             <button class="btn btn-outline-danger p-0" type="button" id="ingredientButton" @click="trashIngredient(ingredient.id)"><small><i class="mdi mdi-trash-can"></i></small></button>
           </div>

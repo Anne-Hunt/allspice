@@ -9,14 +9,14 @@ import { recipeService } from '../services/RecipeService.js';
 const account = computed(()=> AppState.account)
 const recipe = computed(()=>AppState.activeRecipe)
 const ingredients = computed(()=> AppState.ingredients)
-const favorite = computed(()=> AppState.favorites.find(()=> favorite.value.recipeId == favorite.value.accountId))
+// const favorite = computed(()=> AppState.favorites.find(()=> favorite.value.recipeId == favorite.value.accountId))
 const owner = computed(()=> AppState.account.id == recipe.value.creatorId)
 const favorited = computed(()=> AppState.favorites.find(favorite => favorite.recipeId == `${recipe.value.id}`))
 
 async function favoriteRecipe(recipeId){
     try {
       await favoriteService.favorite(recipeId)
-      Pop.success("Favorite!")
+            Pop.success("Favorite!")
     }
     catch (error){
       Pop.toast("Cannot favorite at this time", 'error');
@@ -40,6 +40,20 @@ function edit(){
   catch (error){
     Pop.toast("Unable to edit", 'error');
     logger.error("unable to edit", error);
+  }
+}
+
+async function trashRecipe(recipeId){
+  try {
+    Pop.confirm("Do you want to delete this recipe and all its ingredients?")
+    if(!confirm){
+      return
+    }
+    await recipeService.trashRecipe(recipeId)
+  }
+  catch (error){
+    Pop.toast("Unable to remove recipe", 'error');
+    logger.error("failed to delete recipe", error);
   }
 }
 </script>
@@ -71,9 +85,10 @@ function edit(){
         <p v-for="ingredient in ingredients" :key="ingredient?.id">{{ ingredient?.quantity }} |
           {{ ingredient?.name }}</p>
       </div>
-      <div class="mt-5 text-end">
-        <span v-if="owner" class="text-danger rounded-circle p-1 fs-1 text-end" role="button" @click="edit()"><i
+      <div v-if="owner" class="mt-5 text-end">
+        <span class="text-warning rounded-circle p-1 fs-1 text-end" role="button" @click="edit()"><i
             class="mdi mdi-pencil"></i></span>
+        <span @click="trashRecipe(recipe.id)"><i class="mdi mdi-trash-can text-danger"></i></span>
       </div>
     </div>
   </div>

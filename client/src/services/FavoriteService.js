@@ -1,5 +1,6 @@
 import { AppState } from "../AppState.js"
 import { Favorite } from "../models/Favorite.js"
+import { accountService } from "./AccountService.js"
 import { api } from "./AxiosService.js"
 
 
@@ -8,9 +9,8 @@ class FavoriteService{
     async favorite(recipeId) {
         // const userId = AppState.account.id
         const recipeData = {recipeId: recipeId}
-        const response = await api.post("api/favorites", recipeData)
-        const favorite = new Favorite(response.data)
-        AppState.favorites.push(favorite)
+        await api.post("api/favorites", recipeData)
+        await accountService.getFavorites()
     }
 
     async trashFavorite(favoriteId) {
