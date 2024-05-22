@@ -6,6 +6,7 @@ import { AppState } from '../AppState.js';
 import { ingredientService } from '../services/IngredientService.js';
 
 const ingredients = computed(()=> AppState.ingredients)
+const newRecipe = computed(()=> AppState.newRecipe)
 const ingredientData = {}
 const ingredient = ref({
   quantity: '',
@@ -14,8 +15,7 @@ const ingredient = ref({
 
 async function createIngredient(){
     try {
-      const recipeId = AppState.activeRecipe.id
-      ingredientData.recipeId = recipeId
+      ingredientData.recipeId = newRecipe.value.id
       ingredientData.quantity = ingredient.value.quantity
       ingredientData.name = ingredient.value.name
       await ingredientService.createIngredients(ingredientData)
@@ -33,8 +33,8 @@ async function updateIngredient(ingredientId){
       ingredientData.recipeId = recipeId
       ingredientData.quantity = ingredient.value.quantity
       ingredientData.name = ingredient.value.name
+      ingredientData.id = ingredientId
     await ingredientService.updateIngredient(ingredientData, ingredientId)
-    resetForm()
   }
   catch (error){
     Pop.toast("Unable to update",'error');
@@ -44,12 +44,11 @@ async function updateIngredient(ingredientId){
 
 async function trashIngredient(ingredientId){
   try {
-    Pop.confirm("Do you really want to delete this ingredient?")
+    await Pop.confirm("Do you really want to delete this ingredient?")
     if(!confirm){
       return
     }
     ingredientService.trashIngredient(ingredientId)
-    resetForm()
   }
   catch (error){
     Pop.toast("Unable to delete", 'error');
@@ -65,20 +64,13 @@ function resetForm(){
 
 
 <template>
-  <div class="card">
-    <div class="card-header bg-success">
-      <h2>Ingredients</h2>
-    </div>
-    <div class="card-body">
-
       <div v-if="ingredients">
         <form v-for="ingredient in ingredients" :key="ingredient.id" @submit.prevent="updateIngredient(ingredient.id)">
           <div class="input-group mb-3">
             <input v-model="ingredient.quantity" type="text" class="form-control" :placeholder="ingredient.quantity" aria-label="Quantity">
-            <span class="input-group-text">OF</span>
             <input v-model="ingredient.name" type="text" class="form-control" :placeholder="ingredient.name" aria-label="Name" maxlength="250" aria-describedby="ingredientButton" name="ingredient" id="ingredient">
-            <button class="btn btn-outline-primary" type="submit" id="ingredientButton"><i class="mdi mdi-pencil"></i></button>
-            <button class="btn btn-outline-danger" type="button" id="ingredientButton" @click="trashIngredient(ingredient.id)"><i class="mdi mdi-trash-can"></i></button>
+            <button class="btn btn-outline-primary p-0" type="submit" id="ingredientButton"><small><i class="mdi mdi-pencil"></i></small></button>
+            <button class="btn btn-outline-danger p-0" type="button" id="ingredientButton" @click="trashIngredient(ingredient.id)"><small><i class="mdi mdi-trash-can"></i></small></button>
           </div>
         </form>
       </div>
@@ -92,8 +84,6 @@ function resetForm(){
           </div>
         </form>
       </div>
-    </div>
-    </div>
 </template>
 
 

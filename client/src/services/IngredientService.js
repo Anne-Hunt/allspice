@@ -7,14 +7,12 @@ import { recipeService } from "./RecipeService.js"
 class IngredientsService{
 
 
-    async createIngredients(ingredientData, recipeId){
+    async createIngredients(ingredientData){
         const ingredients = ingredientData
-        ingredients.recipeId = recipeId
-        const supplies = await api.post("api/ingredients")
-        const pantry = supplies.data.map(supplyData => new Ingredient(supplyData))
-        AppState.ingredients = pantry
+        const supplies = await api.post("api/ingredients", ingredients)
+        const pantry = new Ingredient(supplies.data)
+        AppState.ingredients.push(pantry)
     }
-
     async updateIngredient(ingredientId, ingredientData){
         const ingredient = this.getIngredientById(ingredientId);
         AppState.activeIngredient = new Ingredient(ingredient)

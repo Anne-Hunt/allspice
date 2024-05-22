@@ -38,9 +38,10 @@ class RecipeService {
         const user = AppState.account
         recipeData.creatorId = user.id
         const recipe = await api.post('api/recipes', recipeData)
-        const recipeDone = new Recipe(recipe)
+        const recipeDone = new Recipe(recipe.data)
         AppState.recipes.push(recipeDone)
-        AppState.activeRecipe = recipeDone
+        AppState.newRecipe = recipeDone
+        logger.log(AppState.newRecipe)
     }
 
     async updateRecipe(recipeData, recipeId){

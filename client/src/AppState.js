@@ -26,6 +26,9 @@ export const AppState = reactive({
 
   /**@type {Recipe} */
   activeRecipe: null,
+  
+  /**@type {Recipe} */
+  newRecipe: null,
 
 /**@type {Profile} */
 activeProfile: null,

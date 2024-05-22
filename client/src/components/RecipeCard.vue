@@ -62,7 +62,7 @@ async function removeFavorite(recipeId){
                     </div>
                 </div>
             </div>
-        <ModalRecipe :id="`#modal-${recipe?.id}`"/>
+        <ModalRecipe :id="`modal-${recipe?.id}`"/>
 </template>
 
 

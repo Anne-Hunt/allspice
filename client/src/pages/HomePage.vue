@@ -14,11 +14,6 @@ const recipes = computed(()=>{
   return AppState.recipes.filter(recipe => recipe.category == filterBy.value)})
 
 const filterBy = ref('all')
-// const filters = [
-//   {name: 'all'},
-//   {name: 'favorites'},
-//   {name: 'created'},
-// ]
 
 async function getRecipes(){
   try {
