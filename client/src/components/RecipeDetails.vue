@@ -16,6 +16,7 @@ const favorited = computed(()=> AppState.favorites.find(favorite => favorite.rec
 async function favoriteRecipe(recipeId){
     try {
       await favoriteService.favorite(recipeId)
+      Pop.success("Favorite!")
     }
     catch (error){
       Pop.toast("Cannot favorite at this time", 'error');
@@ -51,7 +52,7 @@ function edit(){
         <span class="rounded bg-dark text-light opacity-75 p-1">{{ recipe?.category }}</span>
         <div v-if="account">
           <div v-if="favorited != null" class="rounded-bottom bg-dark text-light opacity-75 p-1"
-            @click="removeFavorite(recipe?.id)">
+            @click="removeFavorite(favorited?.id)">
             <i class="mdi mdi-heart fs-4 text-danger"></i></div>
           <div v-else-if="favorited == null" class="rounded-bottom bg-dark text-light opacity-75 p-1"
             @click="favoriteRecipe(recipe?.id)"><i class="mdi mdi-heart-outline fs-4"></i></div>
