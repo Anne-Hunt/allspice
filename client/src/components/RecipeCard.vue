@@ -7,7 +7,6 @@ import { computed } from 'vue';
 import { AppState } from '../AppState.js';
 import { Favorite } from '../models/Favorite.js';
 import { RecipeFan } from '../models/RecipeFan.js';
-import ModalRecipe from './ModalRecipe.vue';
 import { recipeService } from '../services/RecipeService.js';
 import { Modal } from 'bootstrap';
 

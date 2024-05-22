@@ -4,6 +4,7 @@ import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 import { AppState } from '../AppState.js';
 import { favoriteService } from '../services/FavoriteService.js';
+import { recipeService } from '../services/RecipeService.js';
 
 const account = computed(()=> AppState.account)
 const recipe = computed(()=>AppState.activeRecipe)
@@ -31,30 +32,47 @@ async function removeFavorite(recipeId){
       logger.error("Unable to remove favorite", error)
     }
 }
+function edit(){
+  try {
+    recipeService.prepareEdit()
+  }
+  catch (error){
+    Pop.toast("Unable to edit", 'error');
+    logger.error("unable to edit", error);
+  }
+}
 </script>
 
 
 <template>
-  <div class="card rounded">
-    <div class="card-image-start rounded-start">
-      <div v-if="account">
-        <div v-if="favorited != null" class="rounded-bottom bg-dark text-light opacity-75 p-1"
-          @click="removeFavorite(recipe?.id)">
-          <i class="mdi mdi-heart fs-4 text-danger"></i></div>
-        <div v-else-if="favorited == null" class="rounded-bottom bg-dark text-light opacity-75 p-1"
-          @click="favoriteRecipe(recipe?.id)"><i class="mdi mdi-heart-outline fs-4"></i></div>
+  <div class="rounded row">
+    <div class="rounded-start-bottom imgCard col-md-4 col-12" :style="{backgroundImage: `url(${recipe?.img})`}">
+      <div class="d-flex justify-content-between align-items-center px-1 mb-5">
+        <span class="rounded bg-dark text-light opacity-75 p-1">{{ recipe?.category }}</span>
+        <div v-if="account">
+          <div v-if="favorited != null" class="rounded-bottom bg-dark text-light opacity-75 p-1"
+            @click="removeFavorite(recipe?.id)">
+            <i class="mdi mdi-heart fs-4 text-danger"></i></div>
+          <div v-else-if="favorited == null" class="rounded-bottom bg-dark text-light opacity-75 p-1"
+            @click="favoriteRecipe(recipe?.id)"><i class="mdi mdi-heart-outline fs-4"></i></div>
+        </div>
       </div>
-      <img :src="recipe?.img" :alt="recipe?.title">
     </div>
-    <div class="body row">
-      <span class="card-title">{{ recipe?.title }}</span>
-      <span v-if="owner" class="bg-dark opacity-75 text-light rounded p-1"><i class="mdi mdi-pencil"></i></span>
-      <div class="col-md-6 col-12 rounded">
+    <div class="col-md-4 col-12 my-2">
+      <h5>{{ recipe?.creator.name }}</h5>
+      <div>
         <span>{{ recipe?.instructions }}</span>
       </div>
-      <div class="col-md-6 col-12 rounded">
-        <span v-for="ingredient in ingredients" :key="ingredient?.id">{{ ingredient?.quantity }} |
-          {{ ingredient?.name }}</span>
+    </div>
+    <div class="col-md-4 col-12 my-2">
+      <div>
+        <h5>Ingredients</h5>
+        <p v-for="ingredient in ingredients" :key="ingredient?.id">{{ ingredient?.quantity }} |
+          {{ ingredient?.name }}</p>
+      </div>
+      <div class="mt-5 text-end">
+        <span v-if="owner" class="text-danger rounded-circle p-1 fs-1 text-end" role="button" @click="edit()"><i
+            class="mdi mdi-pencil"></i></span>
       </div>
     </div>
   </div>
@@ -62,5 +80,9 @@ async function removeFavorite(recipeId){
 
 
 <style lang="scss" scoped>
-
+.imgCard{
+    background-position: center;
+    background-size:cover;
+    height: 100dvh;
+}
 </style>
