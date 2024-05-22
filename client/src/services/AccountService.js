@@ -6,6 +6,9 @@ import { api } from './AxiosService'
 // import { recipeService } from './RecipeService.js'
 
 class AccountService {
+  updateAccount() {
+    throw new Error('Method not implemented.')
+  }
   async getAccount() {
     try {
       const res = await api.get('/account')
