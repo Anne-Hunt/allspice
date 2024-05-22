@@ -10,7 +10,7 @@ import { favoriteService } from '../services/FavoriteService.js';
 const recipe = computed(()=>AppState.activeRecipe)
 const ingredients = computed(()=> AppState.ingredients)
 const favorite = computed(()=> AppState.favorites.find(()=> favorite.value.recipeId == favorite.value.accountId))
-const owner = computed(()=> AppState.activeRecipe.creatorId = AppState.account.id)
+// const owner = computed(()=> AppState.account.id == AppState.activeRecipe?.creatorId)
 
 async function favoriteRecipe(recipeId){
     try {
@@ -33,28 +33,28 @@ async function getIngredients(recipeId){
     }
 }
 
-onMounted(()=>
-getIngredients()
-)
+// onMounted(()=>
+// getIngredients()
+// )
 </script>
 
 
 <template>
     <div class="card rounded">
         <div class="card-image-start rounded-start">
-            <div class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="favoriteRecipe(recipe.id)"><i v-if="favorite"
+            <div class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="favoriteRecipe(recipe?.id)"><i v-if="favorite"
                         class="mdi mdi-heart fs-4"></i><i v-else class="mdi mdi-heart-outline fs-4"></i></div>
-            <img :src="recipe.img" :alt="recipe.title">
+            <img :src="recipe?.img" :alt="recipe?.title">
         </div>
         <div class="body row">
-            <span class="card-title">{{ recipe.title }}</span>
-            <span v-if="owner" class="bg-dark opacity-75 text-light rounded p-1"><i class="mdi mdi-pencil"></i></span>
+            <span class="card-title">{{ recipe?.title }}</span>
+            <!-- <span v-if="owner" class="bg-dark opacity-75 text-light rounded p-1"><i class="mdi mdi-pencil"></i></span> -->
             <div class="col-md-6 col-12 rounded">
-                <span>{{ recipe.instructions }}</span>
+                <span>{{ recipe?.instructions }}</span>
             </div>
             <div class="col-md-6 col-12 rounded">
-                <span v-for="ingredient in ingredients" :key="ingredient.id">{{ ingredient.quantity }} |
-                    {{ ingredient.name }}</span>
+                <span v-for="ingredient in ingredients" :key="ingredient?.id">{{ ingredient?.quantity }} |
+                    {{ ingredient?.name }}</span>
             </div>
         </div>
     </div>

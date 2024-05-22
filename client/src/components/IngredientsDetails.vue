@@ -1,18 +1,18 @@
 <script setup>
-import { Ingredient } from '../models/Ingredient.js';
+import { computed } from 'vue';
+import { AppState } from '../AppState.js';
 
-
-defineProps({ingredient: Ingredient})
+const ingredients = computed(()=>AppState.ingredients)
 </script>
 
 
 <template>
-<div class="card bg-success rounded opacity-25 shadow">
+<div class="card">
     <div class="card-title bg-success rounded-top text-light text-center">
         <strong>Ingredients</strong>
     </div>
     <div class="card-body">
-        <span v-for="ingredient in ingredients" :key="ingredient">{{ ingredient.quantity }} | {{ ingredient.name }}</span>
+        <span v-for="ingredient in ingredients" :key="ingredient.id">{{ ingredient.quantity }} | {{ ingredient.name }}</span>
     </div>
 </div>
 </template>

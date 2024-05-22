@@ -5,7 +5,7 @@ import { logger } from '../utils/Logger.js';
 import { recipeService } from '../services/RecipeService.js';
 import { AppState } from '../AppState.js';
 
-const activeRecipe = computed(()=> AppState.activeRecipe)
+const newRecipe = computed(()=> AppState.newRecipe)
 const user = computed(()=>AppState.account)
 const recipeData = {}
 const recipeInput = ref({
@@ -23,7 +23,6 @@ async function createRecipe(){
       recipeData.instructions = recipeInput.value.instructions
       recipeData.creatorId = user.value.id
       await recipeService.createRecipe(recipeData)
-
     }
     catch (error){
       Pop.toast("Unable to submit recipe", 'error');
@@ -57,12 +56,12 @@ onUnmounted(()=>{
 
 <template>
   <div class="card">
-    <div class="card-header bg-success">
-      <div v-if="activeRecipe == null">Create Recipe</div>
-      <h2 v-else>Update Recipe</h2>
+    <div class="card-header">
+      <h5 v-if="newRecipe == null">Create Recipe</h5>
+      <h5 v-else>Update Recipe</h5>
     </div>
     <div class="card-body">
-      <form v-if="activeRecipe == null" @submit.prevent="createRecipe()">
+      <form v-if="newRecipe == null" @submit.prevent="createRecipe()">
         <div class="mb-3">
           <label for="title" class="form-label">Recipe Title</label>
           <input v-model="recipeInput.title" type="text" class="form-control" id="titleInput" placeholder="">
@@ -87,16 +86,17 @@ onUnmounted(()=>{
           <label for="instructions" class="form-label">Instructions</label>
           <textarea v-model="recipeInput.instructions" class="form-control" id="instructionsInput" rows="5"></textarea>
         </div>
+        <button class="btn btn-outline-dark" type="submit" id="createButton">Submit</button>
       </form>
       <form v-else @submit.prevent="updateRecipe()">
         <div class="mb-3">
           <label for="title" class="form-label">Recipe Title</label>
-          <input v-model="recipeInput.title" type="text" class="form-control" id="titleInput" :placeholder="activeRecipe.title">
+          <input v-model="recipeInput.title" type="text" class="form-control" id="titleInput" :placeholder="newRecipe.title">
         </div>
         <div class="mb-3 row">
           <div class="col">
             <label for="image" class="form-label">Image</label>
-            <input v-model="recipeInput.img" type="text" class="form-control" id="imgInput" :placeholder="activeRecipe.img">
+            <input v-model="recipeInput.img" type="text" class="form-control" id="imgInput" :placeholder="newRecipe.img">
           </div>
           <div class="col">
             <label for="category" class="form-label">Category</label>
@@ -111,14 +111,10 @@ onUnmounted(()=>{
         </div>
         <div class="mb-3">
           <label for="instructions" class="form-label">Instructions</label>
-          <textarea v-model="recipeInput.instructions" class="form-control" id="instructionsInput" rows="5" :placeholder="activeRecipe.instructions"></textarea>
+          <textarea v-model="recipeInput.instructions" class="form-control" id="instructionsInput" rows="5" :placeholder="newRecipe.instructions"></textarea>
         </div>
+        <button class="btn btn-outline-dark" type="submit" id="updateButton">Update</button>
       </form>
-    </div>
-    <div class="card-footer bg-success opacity-50">
-      <button v-if="activeRecipe == null" class="btn btn-outline-dark" type="submit" id="createButton">Submit</button>
-      
-      <button v-else class="btn btn-outline-dark" type="submit" id="updateButton">Update</button>
     </div>
   </div>
 
