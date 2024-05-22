@@ -8,6 +8,8 @@ import { AppState } from '../AppState.js';
 import { Favorite } from '../models/Favorite.js';
 import { RecipeFan } from '../models/RecipeFan.js';
 import ModalRecipe from './ModalRecipe.vue';
+import { recipeService } from '../services/RecipeService.js';
+import { Modal } from 'bootstrap';
 
 
 const props = defineProps({recipe: Recipe, favorite: Favorite, recipeFan: RecipeFan})
@@ -35,18 +37,17 @@ async function removeFavorite(recipeId){
     }
 }
 
-// function findFavorite(){
-//     const favorited = AppState.favorites.filter(favorite => favorite.recipeId == props.recipe.id)
-//     const userFavorite = favorited.find(favorite => favorite.creatorId == account.value.id)
-//     fave.value.id = userFavorite.id
-// }
+async function setActiveRecipe(recipeId){
+    await recipeService.setActiveRecipe(recipeId)
+    Modal.getOrCreateInstance('#recipeModal')
+}
 
 </script>
 
 
 <template>
     
-    <div class="card rounded imgCard shadow m-0 p-0" :style="{backgroundImage: `url(${recipe?.img})`}" role="button" data-bs-toggle="modal" :data-bs-target="`#modal-${recipe?.id}`">
+    <div class="card rounded imgCard shadow m-0 p-0" :style="{backgroundImage: `url(${recipe?.img})`}" type="button"   data-bs-toggle="modal" data-bs-target="#recipeModal" @click="setActiveRecipe(recipe.id)">
             <div class="d-flex justify-content-between align-items-center px-1 mb-5">
                 <span class="rounded bg-dark text-light opacity-75 p-1">{{ recipe?.category }}</span>
                 <div v-if="account">
@@ -62,7 +63,6 @@ async function removeFavorite(recipeId){
                     </div>
                 </div>
             </div>
-        <ModalRecipe :id="`modal-${recipe?.id}`"/>
 </template>
 
 
