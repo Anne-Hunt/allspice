@@ -10,7 +10,8 @@ const newRecipe = computed(()=> AppState.newRecipe)
 const ingredientData = {}
 const ingredient = ref({
   quantity: '',
-  name: ''
+  name: '',
+  id: 0
 })
 
 async function createIngredient(){
@@ -29,12 +30,11 @@ async function createIngredient(){
 
 async function updateIngredient(ingredientId){
   try {
-    const recipeId = AppState.activeRecipe.id
-      ingredientData.recipeId = recipeId
       ingredientData.quantity = ingredient.value.quantity
       ingredientData.name = ingredient.value.name
       ingredientData.id = ingredientId
     await ingredientService.updateIngredient(ingredientData, ingredientId)
+    resetForm()
   }
   catch (error){
     Pop.toast("Unable to update",'error');
@@ -44,7 +44,7 @@ async function updateIngredient(ingredientId){
 
 async function trashIngredient(ingredientId){
   try {
-    await Pop.confirm("Do you really want to delete this ingredient?")
+    const confirm = await Pop.confirm("Do you really want to delete this ingredient?")
     if(!confirm){
       return
     }
@@ -59,19 +59,21 @@ async function trashIngredient(ingredientId){
 function resetForm(){
     ingredient.value.quantity = ''
     ingredient.value.name = ''
+    ingredient.value.id = 0
 }
 </script>
 
 
 <template>
       <div v-if="ingredients">
-        <form v-for="ingredient in ingredients" :key="ingredient.id" @submit.prevent="updateIngredient(ingredient.id)">
+        <form v-for="ingredient in ingredients" :key="ingredient.id" @submit.prevent="updateIngredient()">
           <div class="input-group mb-3">
             <input v-model="ingredient.quantity" type="text" class="form-control" :placeholder="ingredient.quantity" aria-label="Quantity">
-            <input v-model="ingredient.name" type="text" class="form-control" :placeholder="ingredient.name" aria-label="Name" maxlength="250" aria-describedby="ingredientButton" name="ingredient" :id="ingredient.name">
+            <input v-model="ingredient.name" type="text" class="form-control" :placeholder="ingredient.name" aria-label="Name" maxlength="250" aria-describedby="ingredientButton" name="ingredient">
             <button class="btn btn-outline-primary p-0" type="submit" id="ingredientButton"><small><i class="mdi mdi-pencil"></i></small></button>
             <button class="btn btn-outline-danger p-0" type="button" id="ingredientButton" @click="trashIngredient(ingredient.id)"><small><i class="mdi mdi-trash-can"></i></small></button>
           </div>
+          <input type="number" class="d-none" v-model="ingredient.id" :placeholder="ingredient.id">
         </form>
       </div>
       <div>

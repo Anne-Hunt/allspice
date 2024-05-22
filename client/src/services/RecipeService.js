@@ -61,17 +61,10 @@ class RecipeService {
     }
 
     async updateRecipe(recipeData, recipeId){
-        const userId = AppState.account.id
-        if(recipeData.creatorId != userId){
-            throw new Error("You cannot edit what is not yours!")
-        }
-        const recipeToUpdate = this.getRecipeById(recipeId)
-        if(!recipeToUpdate){
-            throw new Error("You cannot edit what doesn't exist!")
-        }
-        const updated = await api.put(`api/recipes/${recipeData.id}`)
+        const updated = await api.put(`api/recipes/${recipeId}`, recipeData)
+        logger.log(updated)
         const revised = new Recipe(updated)
-        const recipeUpdate = AppState.recipes.findIndex(revised.id)
+        const recipeUpdate = AppState.recipes.findIndex(recipeId)
         AppState.recipes.splice(recipeUpdate, 1)
         AppState.recipes.push(revised)
     }

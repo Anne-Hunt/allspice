@@ -38,10 +38,12 @@ async function createRecipe(){
     }
 }
 
-async function updateRecipe(recipeId){
+async function updateRecipe(){
 try {
-  // const recipeData = editRecipe
   const recipeData = recipeInput
+  const confirm = await Pop.confirm("Do you want to update this recipe?")
+  if(!confirm){return}
+  const recipeId = newRecipe.value.id
   await recipeService.updateRecipe(recipeData, recipeId)
 }
 catch (error){
@@ -92,7 +94,7 @@ onUnmounted(()=>{
         </div>
         <button class="btn btn-outline-dark" type="submit" id="createButton">Submit</button>
       </form>
-      <form v-else @submit.prevent="updateRecipe(newRecipe?.id)">
+      <form v-else @submit.prevent="updateRecipe()">
         <div class="mb-3">
           <label for="title" class="form-label">Recipe Title</label>
           <input v-model="recipeInput.title" type="text" class="form-control" id="titleInput">
