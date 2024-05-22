@@ -70,7 +70,7 @@ onUnmounted(()=>{
       <form v-if="newRecipe == null" @submit.prevent="createRecipe()">
         <div class="mb-3">
           <label for="title" class="form-label">Recipe Title</label>
-          <input v-model="recipeInput.title" type="text" class="form-control" id="titleInput" placeholder="">
+          <input v-model="recipeInput.title" type="text" class="form-control" id="titleInput" placeholder="" maxlength="250">
         </div>
         <div class="mb-3 row">
           <div class="col">

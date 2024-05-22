@@ -28,11 +28,12 @@ async function createIngredient(){
     }
 }
 
-async function updateIngredient(ingredientId){
+async function updateIngredient(){
   try {
+      const ingredientId = ingredient.value.id
       ingredientData.quantity = ingredient.value.quantity
       ingredientData.name = ingredient.value.name
-      ingredientData.id = ingredientId
+      ingredientData.id = ingredient.value.id
     await ingredientService.updateIngredient(ingredientData, ingredientId)
     resetForm()
   }

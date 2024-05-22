@@ -70,15 +70,6 @@ class RecipeService {
     }
 
     async trashRecipe(recipeId){
-        const userId = AppState.account.id
-        const recipe = this.getRecipeById(recipeId)
-        if(!recipe){
-            throw new Error ("Does not exist!")
-        }
-        const foundRecipe = new Recipe(recipe)
-        if(foundRecipe.creatorId != userId){
-            throw new Error("You can't delete what isn't yours!")
-        }
         await api.delete(`api/recipes/${recipeId}`)
         const trash = AppState.recipes.findIndex(recipeId)
         AppState.recipes.splice(trash, 1)

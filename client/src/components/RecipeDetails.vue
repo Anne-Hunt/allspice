@@ -45,7 +45,7 @@ function edit(){
 
 async function trashRecipe(recipeId){
   try {
-    Pop.confirm("Do you want to delete this recipe and all its ingredients?")
+    const confirm = await Pop.confirm("Do you want to delete this recipe and all its ingredients?")
     if(!confirm){
       return
     }
