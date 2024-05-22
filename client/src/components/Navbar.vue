@@ -44,7 +44,7 @@ function toggleTheme() {
       </div>
       <!-- LOGIN COMPONENT HERE -->
       <div>
-        <button class="btn text-light" @click="toggleTheme"
+        <button class="btn text-warning" @click="toggleTheme"
           :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
           <i class="mdi" :class="theme == 'light' ? 'mdi-weather-sunny fs-1' : 'mdi-weather-night fs-1'"></i>
         </button>
