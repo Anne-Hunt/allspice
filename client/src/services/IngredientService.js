@@ -13,7 +13,7 @@ class IngredientsService{
         const pantry = new Ingredient(supplies.data)
         AppState.ingredients.push(pantry)
     }
-    async updateIngredient(ingredientId, ingredientData){
+    async updateIngredient(ingredientData, ingredientId){
         const ingredient = this.getIngredientById(ingredientId);
         AppState.activeIngredient = new Ingredient(ingredient)
         const recipeId = AppState.activeIngredient.recipeId
@@ -39,7 +39,7 @@ class IngredientsService{
 
     async trashIngredient(ingredientId){
         await api.delete(`api/ingredients/${ingredientId}`)
-        const ingredientToDelete = AppState.ingredients.findIndex(ingredientId)
+        const ingredientToDelete = AppState.ingredients.findIndex(ingredient => ingredient.id == ingredientId)
         AppState.ingredients.splice(ingredientToDelete, 1)
     }
 }
