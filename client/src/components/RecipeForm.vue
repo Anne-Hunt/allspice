@@ -56,10 +56,6 @@ onUnmounted(()=>{
 
 <template>
   <div class="card">
-    <div class="card-header">
-      <h5 v-if="newRecipe == null">Create Recipe</h5>
-      <h5 v-else>Update Recipe</h5>
-    </div>
     <div class="card-body">
       <form v-if="newRecipe == null" @submit.prevent="createRecipe()">
         <div class="mb-3">

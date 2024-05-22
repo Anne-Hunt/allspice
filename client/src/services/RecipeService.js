@@ -6,6 +6,11 @@ import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
 class RecipeService {
+    prepareEdit() {
+      AppState.newRecipe = null
+      AppState.newRecipe = AppState.activeRecipe
+      AppState.activeRecipe = null
+    }
     resetRecipes() {
       AppState.activeRecipe = null
       AppState.newRecipe = null
