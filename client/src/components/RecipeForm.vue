@@ -77,7 +77,7 @@ onUnmounted(()=>{
               <option value="breakfast">Breakfast</option>
               <option value="lunch">Lunch</option>
               <option value="dinner">Dinner</option>
-              <option value="snacks">Snacks</option>
+              <option value="snack">Snacks</option>
               <option value="dessert">Dessert</option>
             </select>
           </div>
@@ -104,7 +104,7 @@ onUnmounted(()=>{
               <option value="breakfast">Breakfast</option>
               <option value="lunch">Lunch</option>
               <option value="dinner">Dinner</option>
-              <option value="snacks">Snacks</option>
+              <option value="snacks">Snack</option>
               <option value="dessert">Dessert</option>
             </select>
           </div>
