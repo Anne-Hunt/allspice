@@ -1,49 +1,47 @@
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed } from 'vue';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
-import { recipeService } from '../services/RecipeService.js';
 import { AppState } from '../AppState.js';
 import { favoriteService } from '../services/FavoriteService.js';
 
-
+const account = computed(()=> AppState.account)
 const recipe = computed(()=>AppState.activeRecipe)
 const ingredients = computed(()=> AppState.ingredients)
 const favorite = computed(()=> AppState.favorites.find(()=> favorite.value.recipeId == favorite.value.accountId))
-// const owner = computed(()=> AppState.account.id == AppState.activeRecipe?.creatorId)
+const owner = computed(()=> AppState.account.id == recipe.value.creatorId)
+const favorited = computed(()=> AppState.favorites.find(favorite => favorite.recipeId == `${recipe.value.id}`))
 
 async function favoriteRecipe(recipeId){
     try {
-      const recipe = recipeId;
-      await favoriteService.favorite(recipe)
+      await favoriteService.favorite(recipeId)
     }
     catch (error){
       Pop.toast("Cannot favorite at this time", 'error');
-      logger.error("Unable to alter favorite", error)
+      logger.error("Unable to add favorite", error)
     }
 }
 
-async function getIngredients(recipeId){
+async function removeFavorite(recipeId){
     try {
-      await recipeService.getIngredientsByRecipe(recipeId)
+      await favoriteService.trashFavorite(recipeId)
     }
     catch (error){
-      Pop.toast("Unable to get ingredients",'error');
-      logger.error("Unable to get ingredients for recipe", error)
+      Pop.toast("Cannot remove favorite at this time", 'error');
+      logger.error("Unable to remove favorite", error)
     }
 }
-
-// onMounted(()=>
-// getIngredients()
-// )
 </script>
 
 
 <template>
     <div class="card rounded">
         <div class="card-image-start rounded-start">
-            <div class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="favoriteRecipe(recipe?.id)"><i v-if="favorite"
-                        class="mdi mdi-heart fs-4"></i><i v-else class="mdi mdi-heart-outline fs-4"></i></div>
+          <div v-if="account">
+                    <div v-if="favorited != null" class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="removeFavorite(recipe?.id)">
+                        <i class="mdi mdi-heart fs-4 text-danger"></i></div>
+                        <div v-else-if="favorited == null" class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="favoriteRecipe(recipe?.id)"><i class="mdi mdi-heart-outline fs-4"></i></div>
+                    </div>
             <img :src="recipe?.img" :alt="recipe?.title">
         </div>
         <div class="body row">

@@ -9,9 +9,9 @@
     <router-view />
   </main>
   <footer class="text-end p-2 sticky-bottom">
-    <button class="btn btn-success rounded-circle" type="button"  data-bs-toggle="modal" data-bs-target="#createModal"><i class="mdi mdi-plus fs-3 text-light"></i></button>
+    <button class="btn btn-success rounded-circle" type="button"  data-bs-toggle="modal" data-bs-target="#recipeModal"><i class="mdi mdi-plus fs-3 text-light"></i></button>
   </footer>
-  <ModalWrapper id="createModal"/>
+  <ModalWrapper id="recipeModal"/>
 </template>
 
 <style lang="scss">

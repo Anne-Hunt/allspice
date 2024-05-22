@@ -32,7 +32,8 @@ defineProps({recipe: Recipe})
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="row">
+        
+        <div v-if="AppState.activeRecipe" class="row">
           <img class="col-12 col-md-4" :src="recipe?.img">
           <div class="col-12 col-md-4">
             <RecipeDetails/>

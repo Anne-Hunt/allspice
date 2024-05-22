@@ -6,6 +6,16 @@ import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
 class RecipeService {
+    resetRecipes() {
+      AppState.activeRecipe = null
+      AppState.newRecipe = null
+    }
+    async setActiveRecipe(recipeId) {
+        AppState.activeRecipe = null
+        const active = AppState.recipes.find(recipe => recipeId == recipe.id)
+        AppState.activeRecipe = active
+        await this.getIngredientsByRecipe(recipeId)
+    }
     async getRecipesWithFavorites() {
         if (AppState.account == null){
             this.getRecipes()
