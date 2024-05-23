@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onUnmounted, onUpdated, ref, watch } from 'vue';
+import { computed, onUnmounted, ref, watch } from 'vue';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 import { recipeService } from '../services/RecipeService.js';
@@ -14,27 +14,8 @@ const recipeInput = ref({
     img: '',
     category: '',
     instructions: '',
-    id: 0
+    id: AppState.newRecipe.id
 })
-
-// const editRecipe = computed(()=>
-//   {if(AppState.newRecipe != null){
-//     recipeInput.value.title = AppState.newRecipe.title
-//   recipeInput.value.instructions= AppState.newRecipe.instructions
-//   recipeInput.value.category = AppState.newRecipe.category
-//   recipeInput.value.img = AppState.newRecipe.img
-//   recipeInput.value.id = AppState.newRecipe.id
-//   return recipeInput
-// }})
-
-
-
-// const editRecipe = ({
-//   title: newRecipe?.value.title || '',
-//   img: newRecipe?.value.img || '',
-//   category: newRecipe?.value.category || '',
-//   instructions: newRecipe?.value.instructions || ''
-// })
 
 async function createRecipe(){
     try {
@@ -53,11 +34,10 @@ async function createRecipe(){
 
 async function updateRecipe(){
 try {
-  const recipeData = recipeInput
   const confirm = await Pop.confirm("Do you want to update this recipe?")
   if(!confirm){return}
   const recipeId = newRecipe.value.id
-  await recipeService.updateRecipe(recipeData, recipeId)
+  await recipeService.updateRecipe(recipeInput.value, recipeId)
 }
 catch (error){
   Pop.toast("Unable to update recipe", 'error');
