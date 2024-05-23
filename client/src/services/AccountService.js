@@ -6,9 +6,7 @@ import { api } from './AxiosService'
 // import { recipeService } from './RecipeService.js'
 
 class AccountService {
-  updateAccount() {
-    throw new Error('Method not implemented.')
-  }
+
   async getAccount() {
     try {
       const res = await api.get('/account')
@@ -19,6 +17,12 @@ class AccountService {
       logger.error('HAVE YOU STARTED YOUR SERVER YET???', err)
     }
   }
+
+  async updateAccount(accountData) {
+		const response = await api.put('/account', accountData)
+		logger.log('🧑‍🎨👍', response.data);
+		AppState.account = new Account(response.data)
+	}
 
   async getFavorites() {
     const response = await api.get("/account/favorites")

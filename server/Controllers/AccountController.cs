@@ -30,6 +30,24 @@ public class AccountController : ControllerBase
     }
   }
 
+  [HttpPut]
+  [Authorize]
+
+  public async Task<ActionResult<Account>> UpdateAccount(Account userData)
+  {
+    try
+    {
+      Account user = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      string userEmail = user.Email;
+      Account userUpdated = _accountService.Edit(userData, userEmail);
+      return userUpdated;
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
+
   [HttpGet("favorites")]
   public async Task<ActionResult<List<Favorite>>> GetFavorites()
   {

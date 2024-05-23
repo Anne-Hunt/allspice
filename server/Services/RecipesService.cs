@@ -70,8 +70,9 @@ public class RecipesService
         return recipes;
     }
 
-    internal bool SearchRecipes(string searchQuery)
+    internal List<Recipe> SearchRecipes(string searchQuery)
     {
-        throw new NotImplementedException();
+        List<Recipe> recipes = _repository.SearchRecipes(searchQuery);
+        return recipes;
     }
 }
