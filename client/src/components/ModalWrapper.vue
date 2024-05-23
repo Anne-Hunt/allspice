@@ -7,8 +7,8 @@ import { Modal } from 'bootstrap';
 const recipe = computed(()=> AppState.activeRecipe)
 
 function closeAndReset(){
-  recipeService.resetRecipes()
   Modal.getOrCreateInstance('#recipeModal').hide
+  recipeService.resetRecipes()
 }
 </script>
 
