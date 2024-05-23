@@ -14,6 +14,7 @@ class RecipeService {
     resetRecipes() {
       AppState.activeRecipe = null
       AppState.newRecipe = null
+      AppState.ingredients = []
     }
     async setActiveRecipe(recipeId) {
         AppState.activeRecipe = null
@@ -61,19 +62,30 @@ class RecipeService {
     }
 
     async updateRecipe(recipeData, recipeId){
+        const recipeToUpdate = AppState.recipes.find(recipe => recipe.id == recipeId)
+        logger.log(recipeToUpdate)
+        recipeData.title = recipeToUpdate.title ?? recipeData.title
+        recipeData.instructions = recipeToUpdate.instructions ?? recipeData.instructions
+        recipeData.category = recipeToUpdate.category ?? recipeData.category
+        recipeData.img = recipeToUpdate.img ?? recipeData.img
         const updated = await api.put(`api/recipes/${recipeId}`, recipeData)
         logger.log(updated)
-        const revised = new Recipe(updated)
-        const recipeUpdate = AppState.recipes.findIndex(recipeId)
-        AppState.recipes.splice(recipeUpdate, 1)
-        AppState.recipes.push(revised)
+        this.getRecipes()
     }
 
     async trashRecipe(recipeId){
         await api.delete(`api/recipes/${recipeId}`)
-        const trash = AppState.recipes.findIndex(recipeId)
+        const trash = AppState.recipes.findIndex(recipe => recipe.id == recipeId)
         AppState.recipes.splice(trash, 1)
     }
+
+    async searchRecipes(searchingQuery) {
+        AppState.recipes = []
+        const response = await api.get(`api/recipes/search/query=${searchingQuery}`)
+        const recipes = response.data.map(recipe => new Recipe(recipe))
+        AppState.recipes = recipes
+        logger.log(recipes)
+      }
 }
 
 export const recipeService = new RecipeService()

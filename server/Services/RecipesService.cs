@@ -69,4 +69,9 @@ public class RecipesService
         List<RecipeFan> recipes = _repository.GetRecipesWithFavorites(userId);
         return recipes;
     }
+
+    internal bool SearchRecipes(string searchQuery)
+    {
+        throw new NotImplementedException();
+    }
 }

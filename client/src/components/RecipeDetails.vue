@@ -5,6 +5,7 @@ import { logger } from '../utils/Logger.js';
 import { AppState } from '../AppState.js';
 import { favoriteService } from '../services/FavoriteService.js';
 import { recipeService } from '../services/RecipeService.js';
+import { Modal } from 'bootstrap';
 
 const account = computed(()=> AppState.account)
 const recipe = computed(()=>AppState.activeRecipe)
@@ -50,6 +51,8 @@ async function trashRecipe(recipeId){
       return
     }
     await recipeService.trashRecipe(recipeId)
+    Modal.getOrCreateInstance('#recipeModal').hide
+    recipeService.resetRecipes()
   }
   catch (error){
     Pop.toast("Unable to remove recipe", 'error');

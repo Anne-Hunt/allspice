@@ -37,5 +37,7 @@ activeProfile: null,
 activeIngredient: null,
 
 /**@type {Favorite} */
-activeFavorite: null
+activeFavorite: null,
+
+searchTerms: ''
 })

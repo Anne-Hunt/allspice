@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onUnmounted, ref } from 'vue';
+import { computed, onUnmounted, onUpdated, ref, watch } from 'vue';
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
 import { recipeService } from '../services/RecipeService.js';
@@ -13,8 +13,21 @@ const recipeInput = ref({
     title: '',
     img: '',
     category: '',
-    instructions: ''
+    instructions: '',
+    id: 0
 })
+
+// const editRecipe = computed(()=>
+//   {if(AppState.newRecipe != null){
+//     recipeInput.value.title = AppState.newRecipe.title
+//   recipeInput.value.instructions= AppState.newRecipe.instructions
+//   recipeInput.value.category = AppState.newRecipe.category
+//   recipeInput.value.img = AppState.newRecipe.img
+//   recipeInput.value.id = AppState.newRecipe.id
+//   return recipeInput
+// }})
+
+
 
 // const editRecipe = ({
 //   title: newRecipe?.value.title || '',
@@ -57,11 +70,29 @@ function resetForm(){
   recipeInput.value.instructions= ''
   recipeInput.value.category = ''
   recipeInput.value.img = ''
+  recipeInput.value.id = 0
 }
+
+function setValues(){
+    recipeInput.value.title = AppState.newRecipe.title
+  recipeInput.value.instructions= AppState.newRecipe.instructions
+  recipeInput.value.category = AppState.newRecipe.category
+  recipeInput.value.img = AppState.newRecipe.img
+  recipeInput.value.id = AppState.newRecipe.id
+  }
+
+watch(
+  () => newRecipe.value,
+  async() => {
+    logger.log(newRecipe.value);
+    setValues()
+  }
+);
 
 onUnmounted(()=>{
   resetForm()
 })
+
 </script>
 
 
@@ -95,18 +126,20 @@ onUnmounted(()=>{
         <button class="btn btn-outline-dark" type="submit" id="createButton">Submit</button>
       </form>
       <form v-else @submit.prevent="updateRecipe()">
+        <!-- <div v-for="recipe in newRecipe" :key="recipe">
+        </div> -->
         <div class="mb-3">
           <label for="title" class="form-label">Recipe Title</label>
-          <input v-model="recipeInput.title" type="text" class="form-control" id="titleInput">
+          <input v-model="recipeInput.title" type="text" class="form-control" id="titleInput" :placeholder="newRecipe.title">
         </div>
         <div class="mb-3 row">
           <div class="col">
             <label for="image" class="form-label">Image</label>
-            <input v-model="recipeInput.img" type="text" class="form-control" id="imgInput">
+            <input v-model="recipeInput.img" type="text" class="form-control" id="imgInput" :placeholder="newRecipe.img">
           </div>
           <div class="col">
             <label for="category" class="form-label">Category</label>
-            <select v-model="recipeInput.category" class="form-select" id="categoryInput" aria-label="select-category">
+            <select v-model="recipeInput.category" class="form-select" id="categoryInput" aria-label="select-category" :selected="newRecipe.category">
               <option value="breakfast">Breakfast</option>
               <option value="lunch">Lunch</option>
               <option value="dinner">Dinner</option>
@@ -117,8 +150,9 @@ onUnmounted(()=>{
         </div>
         <div class="mb-3">
           <label for="instructions" class="form-label">Instructions</label>
-          <textarea v-model="recipeInput.instructions" class="form-control" id="instructionsInput" rows="5"></textarea>
+          <textarea v-model="recipeInput.instructions" class="form-control" id="instructionsInput" rows="5" :placeholder="newRecipe.instructions"></textarea>
         </div>
+        <input type="number" class="d-none" v-model="recipeInput.id">
         <button class="btn btn-outline-dark" type="submit" id="updateButton">Update</button>
       </form>
     </div>

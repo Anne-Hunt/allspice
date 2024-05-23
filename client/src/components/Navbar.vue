@@ -1,10 +1,36 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
+import { logger } from '../utils/Logger.js';
+import Pop from '../utils/Pop.js';
+import { AppState } from '../AppState.js';
+import { searchService } from '../services/SearchService.js';
 
 const theme = ref(loadState('theme') || 'light')
+const searchingQuery = ref('')
+const searchTerms= computed(() => AppState.searchTerms)
 
+// async function clearSearch(){
+// 	try {
+// 		await searchService.clearSearch()
+// 		router.push({name: 'Home'})
+// 	} catch (error) {
+// 		logger.error("unable to clear search", error)
+// 		Pop.toast("Unable to clear search", 'error')
+// 	}
+// }
+
+async function search(){
+	try {
+		await searchService.searchTerms(searchingQuery)
+		this.router.push({ name: "Home", params: { query: searchingQuery.value } })
+		searchingQuery.value = ''
+	} catch (error) {
+		logger.error('search failure!!', error)
+		Pop.toast("Unable to search at the moment sir", 'error')
+	}
+}
 function toggleTheme() {
   theme.value = theme.value == 'light' ? 'dark' : 'light'
   document.documentElement.setAttribute('data-bs-theme', theme.value)
@@ -37,7 +63,7 @@ onMounted(() => {
       </ul>
       <div class="d-flex align-items-center">
         <div class="input-group input-group-sm">
-          <input type="text" class="form-control" aria-label="search-input" aria-describedby="search-input-label">
+          <input v-model="searchingQuery" type="text" class="form-control" aria-label="search-input" aria-describedby="search-input-label">
           <span class="input-group-text" id="search-input-label"><i class="mdi mdi-magnify fs-5 text-success"></i></span>
 </div>
       </div>

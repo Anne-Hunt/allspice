@@ -1,4 +1,5 @@
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -45,6 +46,21 @@ public class RecipesController : ControllerBase
         {
             List<Recipe> recipes = _recipesService.GetRecipes();
             return Ok(recipes);
+        }
+        catch (Exception exception)
+        {
+            return BadRequest(exception.Message);
+        }
+    }
+
+    [HttpGet("search/query={SearchQuery}")]
+
+    public ActionResult<List<Recipe>> SearchRecipes(string SearchQuery)
+    {
+        try
+        {
+            List<Recipe> recipe = _recipesService.SearchRecipes(SearchQuery);
+            return Ok(recipe);
         }
         catch (Exception exception)
         {
