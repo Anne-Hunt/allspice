@@ -14,7 +14,7 @@ const recipeInput = ref({
     img: '',
     category: '',
     instructions: '',
-    id: AppState.newRecipe.id
+    id: 0
 })
 
 async function createRecipe(){
@@ -24,6 +24,7 @@ async function createRecipe(){
       recipeData.category = recipeInput.value.category
       recipeData.instructions = recipeInput.value.instructions
       recipeData.creatorId = user.value.id
+      recipeData.id = AppState.newRecipe.id
       await recipeService.createRecipe(recipeData)
     }
     catch (error){
