@@ -8,7 +8,7 @@ Completed 2024
 
 ## DESCRIPTION
 
-All Spice is a recipe app that allows users to favorite recipes added by others and create their own. Adding a recipe requires adding ingredients, both the name of each and the quantity, and allowing users to edit the recipe instructions and ingredient list.
+All Spice is a recipe app that allows users to favorite recipes added by others and create their own. Adding a recipe requires adding ingredients, both the name of each and the quantity, and allowing users to edit the recipe instructions and ingredient list. Filters are built-in.
 
 ## SKILLS
 
