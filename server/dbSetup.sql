@@ -1,4 +1,4 @@
--- Active: 1715613930671@@35.87.147.206@3306@adventurous_snake_7702b5_db
+-- Active: 1719356914340@@52.43.75.200@3306@allspice
 CREATE TABLE IF NOT EXISTS accounts(
   id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
