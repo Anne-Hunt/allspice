@@ -11,15 +11,6 @@ const theme = ref(loadState('theme') || 'light')
 const searchingQuery = ref('')
 const searchTerms= computed(() => AppState.searchTerms)
 
-// async function clearSearch(){
-// 	try {
-// 		await searchService.clearSearch()
-// 		router.push({name: 'Home'})
-// 	} catch (error) {
-// 		logger.error("unable to clear search", error)
-// 		Pop.toast("Unable to clear search", 'error')
-// 	}
-// }
 
 async function search(){
 	try {
