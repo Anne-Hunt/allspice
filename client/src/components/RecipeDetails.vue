@@ -11,7 +11,7 @@ const account = computed(()=> AppState.account)
 const recipe = computed(()=>AppState.activeRecipe)
 const ingredients = computed(()=> AppState.ingredients)
 // const favorite = computed(()=> AppState.favorites.find(()=> favorite.value.recipeId == favorite.value.accountId))
-const owner = computed(()=> AppState.account.id == recipe.value.creatorId)
+const owner = computed(()=> AppState.account?.id == recipe.value.creatorId)
 const favorited = computed(()=> AppState.favorites.find(favorite => favorite.recipeId == `${recipe.value.id}`))
 
 async function favoriteRecipe(recipeId){
@@ -64,9 +64,9 @@ async function trashRecipe(recipeId){
 
 <template>
   <div class="rounded row">
-    <div class="rounded-start-bottom imgCard col-md-4 col-12" :style="{backgroundImage: `url(${recipe?.img})`}">
-      <div class="d-flex justify-content-between align-items-center px-1 mb-5">
-        <span class="rounded bg-dark text-light opacity-75 p-1">{{ recipe?.category }}</span>
+    <div class="rounded-start-bottom imgCard col-md-5 col-12 p-0" :style="{backgroundImage: `url(${recipe?.img})`}">
+      <div class="d-flex justify-content-between align-items-center p-0 mb-5">
+        <span class="rounded bg-dark text-light opacity-75 fs-2 p-1">{{ recipe?.category }}</span>
         <div v-if="account">
           <div v-if="favorited != null" class="rounded-bottom bg-dark text-light opacity-75 p-1"
             @click="removeFavorite(favorited?.id)">
@@ -77,14 +77,15 @@ async function trashRecipe(recipeId){
       </div>
     </div>
     <div class="col-md-4 col-12 my-2">
-      <h5>{{ recipe?.creator.name }}</h5>
-      <div>
+      <h3>Instructions</h3>
+      <div class="my-2 px-2">
         <span>{{ recipe?.instructions }}</span>
       </div>
+      <h5>by {{ recipe?.creator.name }}</h5>
     </div>
-    <div class="col-md-4 col-12 my-2">
+    <div class="col-md-3 col-12 my-2">
       <div>
-        <h5>Ingredients</h5>
+        <h3>Ingredients</h3>
         <p v-for="ingredient in ingredients" :key="ingredient?.id">{{ ingredient?.quantity }} |
           {{ ingredient?.name }}</p>
       </div>
@@ -102,6 +103,6 @@ async function trashRecipe(recipeId){
 .imgCard{
     background-position: center;
     background-size:cover;
-    height: 100dvh;
+    height: 80dvh;
 }
 </style>

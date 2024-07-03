@@ -42,8 +42,8 @@ accountData.value = { ...AppState.account } )
 
       </div>
       <h1>Welcome {{ account.name }}</h1>
-      <img class="rounded" :src="account.picture" alt="" />
-      <p>{{ account.email }}</p>
+      <img class="rounded-circle border border-danger border-2" :src="account.picture" alt="" />
+      <p>{{ account.name }}</p>
     </div>
     <div v-else>
       <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>
@@ -87,7 +87,10 @@ accountData.value = { ...AppState.account } )
 
 <style scoped lang="scss">
 img {
-  max-width: 100px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .heroImg{
