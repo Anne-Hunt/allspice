@@ -46,7 +46,7 @@ onMounted(()=>
 <template>
 <div class="container-fluid m-0 p-0">
   <div class="container-fluid heroImg shadow">
-    <Navbar/>
+    <Navbar class="fontfix"/>
     </div>
   <div class="row justify-content-center mb-4">
       <div class="col-6 shadow overlay">
@@ -77,5 +77,9 @@ onMounted(()=>
   position: absolute;
   z-index: 1;
   top: 45dvh;
+}
+
+.fontfix{
+  text-shadow: 1px 1px 4px black;
 }
 </style>
