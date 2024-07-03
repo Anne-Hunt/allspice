@@ -36,7 +36,7 @@ onMounted(() => {
 <template>
   <nav class="navbar navbar-expand-sm px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
+      <div class="d-flex flex-column align-items-center fontfix">
         <i class="mdi mdi-noodles fs-1 text-light"></i>
       </div>
     </router-link>
@@ -47,14 +47,14 @@ onMounted(() => {
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
+          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase fontfix">
             About
           </router-link>
         </li>
       </ul>
       <div class="d-flex align-items-center">
         <div class="input-group input-group-sm">
-          <input v-model="searchingQuery" type="text" class="form-control" aria-label="search-input" aria-describedby="search-input-label">
+          <input v-model="searchingQuery" type="text" class="form-control shadow" aria-label="search-input" aria-describedby="search-input-label">
           <span class="input-group-text" id="search-input-label"><i class="mdi mdi-magnify fs-5 text-success"></i></span>
 </div>
       </div>
@@ -62,7 +62,7 @@ onMounted(() => {
       <div>
         <button class="btn text-warning" @click="toggleTheme"
           :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
-          <i class="mdi" :class="theme == 'light' ? 'mdi-weather-sunny fs-1' : 'mdi-weather-night fs-1'"></i>
+          <i class="mdi" :class="theme == 'light' ? 'mdi-lightbulb fs-1 text-light fontfix' : 'mdi-lightbulb-outline fs-1'"></i>
         </button>
       </div>
       <Login />
@@ -83,6 +83,10 @@ a:hover {
   border-bottom: 2px solid var(--bs-success);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+.fontfix{
+  text-shadow: 1px 1px 4px black;
 }
 
 @media screen and (min-width: 576px) {
