@@ -53,7 +53,7 @@ accountData.value = { ...AppState.account } )
       <RecipeCard :recipe="recipe"/>
     </div>
   </div>
-  <div v-else><h4>Click the <i class="mdi mdi-plus-circle"></i> below to add a recipe!</h4></div>
+  <div v-else class="row g-3 mt-5 px-3"><h4>Click the <i class="mdi mdi-plus-circle"></i> below to add a recipe!</h4></div>
   <div v-if="favorites.length > 0" class="row g-3 mt-5 px-3">
 
     <h4>Your Favorites</h4>
@@ -61,7 +61,7 @@ accountData.value = { ...AppState.account } )
       <RecipeCard :recipe="favorite"/>
     </div>
   </div>
-  <div v-else><h4>Return to the home page and <i class="mdi mdi-heart"></i></h4> some recipes to add favorites!</div>
+  <div v-else class="row g-3 mt-5 px-3"><h4>Return to the home page and <i class="mdi mdi-heart"></i> some recipes to add favorites!</h4></div>
 </div>
 
 
