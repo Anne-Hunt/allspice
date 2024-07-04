@@ -32,22 +32,23 @@ accountData.value = { ...AppState.account } )
 <div class="container-fluid m-0 p-0">
   <div class="container-fluid heroImg shadow m-0 p-0">
     <Navbar class="bg-dark"/>
+    <div class="row p-0 m-0 justify-content-center align-content-bottom text-center">
+      <h1 class="text-light pb-5 fontfix">Welcome {{ account.name }}</h1>
+      <div class="pt-5">
+
+        <img class="rounded-circle border border-light shadow border-3 profileImg p-0" :src="account.picture" alt="" />
+      </div>
     </div>
-  <div class="about text-center">
     <div v-if="account">
       <div class="text-end">
-        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#accountEditForm" aria-controls="accountEditForm">
+        <button class="btn btn-primary shadow" type="button" data-bs-toggle="offcanvas" data-bs-target="#accountEditForm" aria-controls="accountEditForm">
   Edit Account
 </button>
 
       </div>
-      <h1>Welcome {{ account.name }}</h1>
-      <img class="rounded" :src="account.picture" alt="" />
-      <p>{{ account.email }}</p>
     </div>
-    <div v-else>
-      <h1>Loading... <i class="mdi mdi-loading mdi-spin"></i></h1>
     </div>
+  <div class="about text-center">
   </div>
   <div class="row g-3 mt-5 px-3">
     <h4>Your Recipes</h4>
@@ -86,13 +87,23 @@ accountData.value = { ...AppState.account } )
 </template>
 
 <style scoped lang="scss">
-img {
-  max-width: 100px;
+
+.profileImg{
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+  object-position: center;
+  // position:absolute;
+  // bottom: 50px;
 }
 
 .heroImg{
   background-image: url("https://plus.unsplash.com/premium_photo-1681401570418-4054ba349fa3?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
   background-size: cover;
   height: 50dvh;
+}
+
+.fontfix{
+  text-shadow: 1px 1px 4px black;
 }
 </style>

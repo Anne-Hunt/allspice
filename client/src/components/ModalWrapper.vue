@@ -19,7 +19,7 @@ function closeAndReset(){
       <div class="modal-content">
         <div class="modal-header justify-content-between">
           <h3 v-if="!recipe" class="modal-title fs-5" id="modalFormLabel">Create</h3>
-          <h3 v-else>{{ recipe?.title }}</h3>
+          <h1 v-else>{{ recipe?.title }}</h1>
           <button v-if="!recipe" type="button" class="btn btn-success rounded" data-bs-dismiss="modal" aria-label="Close"
             @click="closeAndReset()">Save & Close</button>
           <button v-else type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"

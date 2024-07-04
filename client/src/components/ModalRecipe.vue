@@ -34,11 +34,11 @@ defineProps({recipe: Recipe})
       <div class="modal-body">
         
         <div v-if="AppState.activeRecipe" class="row">
-          <img class="col-12 col-md-4" :src="recipe?.img">
+          <img class="col-12 col-md-5" :src="recipe?.img">
           <div class="col-12 col-md-4">
             <RecipeDetails/>
           </div>
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-3">
             <IngredientsDetails/>
           </div>
         </div>
