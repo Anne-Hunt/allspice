@@ -81,7 +81,7 @@ accountData.value = { ...AppState.account } )
 
 .heroImg{
   background-size: cover;
-  height: 50dvh;
+  height: 35dvh;
 }
 
 .fontfix{
