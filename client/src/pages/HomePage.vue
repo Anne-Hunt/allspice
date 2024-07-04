@@ -51,9 +51,9 @@ onMounted(()=>
   <div class="row justify-content-center mb-4">
       <div class="col-6 shadow overlay">
         <div class="row p-3 bg-light text-success align-items-end">
-          <div class="col text-center" type="button" @click="filterBy = 'all'">Home</div>
-          <div class="col text-center" type="button" @click="filterBy = 'created'">My Recipes</div>
-          <div class="col text-center" type="button" @click="filterBy = 'favorites'">Favorites</div>
+          <div class="col text-center" type="button" @click="filterBy = 'all'"><strong>Home</strong></div>
+          <div class="col text-center" type="button" @click="filterBy = 'created'"><strong>My Recipes</strong></div>
+          <div class="col text-center" type="button" @click="filterBy = 'favorites'"><strong>Favorites</strong></div>
         </div>
       </div>
     </div>

@@ -41,49 +41,29 @@ accountData.value = { ...AppState.account } )
     </div>
     <div v-if="account">
       <div class="text-end">
-        <button class="btn btn-primary shadow" type="button" data-bs-toggle="offcanvas" data-bs-target="#accountEditForm" aria-controls="accountEditForm">
-  Edit Account
-</button>
-
+        <i class="mdi mdi-dots-horizontal fontfix fs-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvas" aria-controls="offCanvas"></i>
       </div>
     </div>
     </div>
   <div class="about text-center">
   </div>
-  <div class="row g-3 mt-5 px-3">
+  <div v-if="recipes.length > 0" class="row g-3 mt-5 px-3">
     <h4>Your Recipes</h4>
     <div class="col-md-4 col-6 d-flex" v-for="recipe in recipes" :key="recipe?.id">
       <RecipeCard :recipe="recipe"/>
     </div>
+  <div v-if="favorites.length > 0" class="row g-3 mt-5 px-3">
+
     <h4>Your Favorites</h4>
     <div class="col-md-4 col-6 d-flex" v-for="favorite in favorites" :key="favorite?.id">
       <RecipeCard :recipe="favorite"/>
     </div>
+  </div>
     </div>
     </div>
 
-    <!--OFFCANVAS-->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="editAccountForm" aria-labelledby="accountFormLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="accountFormLabel">Edit Your Account</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    <div>
-      <form @submit.prevent="editAccount()">
-        <div class="mb-3">
-  <label for="nameInput" class="form-label">Name</label>
-  <input type="text" class="form-control" id="nameInput" v-model="accountData.name">
-</div>
-<div class="mb-3">
-  <label for="imageUrl" class="form-label">Picture</label>
-  <input type="text" class="form-control" id="imageUrl" v-model="accountData.picture">
-</div>
-<button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    </div>
-  </div>
-</div>
+
+<Offcanvas></Offcanvas>
 </template>
 
 <style scoped lang="scss">
