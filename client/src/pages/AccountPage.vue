@@ -38,10 +38,10 @@ accountData.value = { ...AppState.account } )
 
         <img class="rounded-circle border border-light shadow border-3 profileImg p-0" :src="account.picture" alt="" />
       </div>
-    </div>
-    <div v-if="account">
-      <div class="text-end">
-        <i class="mdi mdi-dots-horizontal fontfix text-light fs-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvas" aria-controls="offCanvas"></i>
+      <div v-if="account">
+        <div class="text-end">
+          <i class="mdi mdi-dots-horizontal fontfix text-light fs-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvas" aria-controls="offCanvas"></i>
+        </div>
       </div>
     </div>
     </div>
