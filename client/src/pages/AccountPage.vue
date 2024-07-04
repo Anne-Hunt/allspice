@@ -30,7 +30,7 @@ accountData.value = { ...AppState.account } )
 
 <template>
 <div class="container-fluid m-0 p-0">
-  <div class="container-fluid heroImg shadow m-0 p-0">
+  <div class="container-fluid heroImg shadow m-0 p-0" :style="{backgroundImage: `url(${account?.coverImg})`}">
     <Navbar class="bg-dark"/>
     <div class="row p-0 m-0 justify-content-center align-content-bottom text-center">
       <h1 class="text-light pb-5 fontfix">Welcome {{ account.name }}</h1>
@@ -41,7 +41,7 @@ accountData.value = { ...AppState.account } )
     </div>
     <div v-if="account">
       <div class="text-end">
-        <i class="mdi mdi-dots-horizontal fontfix fs-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvas" aria-controls="offCanvas"></i>
+        <i class="mdi mdi-dots-horizontal fontfix text-light fs-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvas" aria-controls="offCanvas"></i>
       </div>
     </div>
     </div>
@@ -52,6 +52,8 @@ accountData.value = { ...AppState.account } )
     <div class="col-md-4 col-6 d-flex" v-for="recipe in recipes" :key="recipe?.id">
       <RecipeCard :recipe="recipe"/>
     </div>
+  </div>
+  <div v-else><h4>Click the <i class="mdi mdi-plus-circle"></i> below to add a recipe!</h4></div>
   <div v-if="favorites.length > 0" class="row g-3 mt-5 px-3">
 
     <h4>Your Favorites</h4>
@@ -59,8 +61,8 @@ accountData.value = { ...AppState.account } )
       <RecipeCard :recipe="favorite"/>
     </div>
   </div>
-    </div>
-    </div>
+  <div v-else><h4>Return to the home page and <i class="mdi mdi-heart"></i></h4> some recipes to add favorites!</div>
+</div>
 
 
 <Offcanvas></Offcanvas>
@@ -78,7 +80,6 @@ accountData.value = { ...AppState.account } )
 }
 
 .heroImg{
-  background-image: url("https://plus.unsplash.com/premium_photo-1681401570418-4054ba349fa3?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
   background-size: cover;
   height: 50dvh;
 }
