@@ -30,9 +30,9 @@ accountData.value = { ...AppState.account } )
 
 <template>
 <div class="container-fluid m-0 p-0">
-  <div class="container-fluid heroImg shadow m-0 p-0" :style="{backgroundImage: `url(${account?.coverImg})`}">
+  <div class="container-fluid shadow m-0 p-0">
     <Navbar class="bg-dark"/>
-    <div class="row p-0 m-0 justify-content-center align-content-bottom text-center">
+    <div class="row p-0 m-0 heroImg justify-content-center align-content-bottom text-center" :style="{backgroundImage: `url(${account?.coverImg})`}">
       <h1 class="text-light pb-5 fontfix">Welcome {{ account.name }}</h1>
       <div class="pt-5">
 
