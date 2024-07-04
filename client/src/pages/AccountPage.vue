@@ -41,8 +41,7 @@ accountData.value = { ...AppState.account } )
     </div>
     <div v-if="account">
       <div class="text-end">
-        <i class="mdi mdi-dots-horizontal fontfix fs-1" data-bs-toggle="modal" data-bs-target="#modalWrapper"></i>
-
+        <i class="mdi mdi-dots-horizontal fontfix fs-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvas" aria-controls="offCanvas"></i>
       </div>
     </div>
     </div>
@@ -63,30 +62,8 @@ accountData.value = { ...AppState.account } )
     </div>
     </div>
 
-    <!--OFFCANVAS-->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="editAccountForm" aria-labelledby="accountFormLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="accountFormLabel">Edit Your Account</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    <div>
-      <form @submit.prevent="editAccount()">
-        <div class="mb-3">
-  <label for="nameInput" class="form-label">Name</label>
-  <input type="text" class="form-control" id="nameInput" v-model="accountData.name">
-</div>
-<div class="mb-3">
-  <label for="imageUrl" class="form-label">Picture</label>
-  <input type="text" class="form-control" id="imageUrl" v-model="accountData.picture">
-</div>
-<button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    </div>
-  </div>
-</div>
 
-<ModalWrapper><AccountForm></AccountForm></ModalWrapper>
+<Offcanvas></Offcanvas>
 </template>
 
 <style scoped lang="scss">

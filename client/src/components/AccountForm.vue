@@ -11,7 +11,7 @@ const accountData = ref({
     name: '',
     picture: '',
     coverImg: '',
-    // email: ''
+    email: ''
 })
 
 async function updateAccount(){
@@ -20,7 +20,7 @@ async function updateAccount(){
         updateAccount.name = accountData.value.name
         updateAccount.coverImg = accountData.value.coverImg
         updateAccount.picture = accountData.value.picture
-        // updateAccount.email = accountData.value.email
+        updateAccount.email = accountData.value.email
       await accountService.updateAccount(updateAccount)
       resetForm()
     }
@@ -64,10 +64,10 @@ onMounted(()=>{
         <label for="coverImage">Cover Image</label>
         <input type="text" v-model="accountData.coverImg" class="w-100">
     </div>
-    <!-- <div class="mb-3">
+    <div class="mb-3">
         <label for="Email">Email</label>
         <input type="text" v-model="accountData.email" class="w-100">
-    </div> -->
+    </div>
 
     <div class="d-flex justify-content-end">
         <button class="btn btn-dark text-light text-end" type="submit">Update Account</button>
