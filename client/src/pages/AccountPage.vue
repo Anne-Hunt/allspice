@@ -41,24 +41,25 @@ accountData.value = { ...AppState.account } )
     </div>
     <div v-if="account">
       <div class="text-end">
-        <button class="btn btn-primary shadow" type="button" data-bs-toggle="offcanvas" data-bs-target="#accountEditForm" aria-controls="accountEditForm">
-  Edit Account
-</button>
+        <i class="mdi mdi-dots-horizontal fontfix fs-1" data-bs-toggle="modal" data-bs-target="#modalWrapper"></i>
 
       </div>
     </div>
     </div>
   <div class="about text-center">
   </div>
-  <div class="row g-3 mt-5 px-3">
+  <div v-if="recipes.length > 0" class="row g-3 mt-5 px-3">
     <h4>Your Recipes</h4>
     <div class="col-md-4 col-6 d-flex" v-for="recipe in recipes" :key="recipe?.id">
       <RecipeCard :recipe="recipe"/>
     </div>
+  <div v-if="favorites.length > 0" class="row g-3 mt-5 px-3">
+
     <h4>Your Favorites</h4>
     <div class="col-md-4 col-6 d-flex" v-for="favorite in favorites" :key="favorite?.id">
       <RecipeCard :recipe="favorite"/>
     </div>
+  </div>
     </div>
     </div>
 
@@ -84,6 +85,8 @@ accountData.value = { ...AppState.account } )
     </div>
   </div>
 </div>
+
+<ModalWrapper><AccountForm></AccountForm></ModalWrapper>
 </template>
 
 <style scoped lang="scss">

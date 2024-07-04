@@ -49,7 +49,7 @@ async function setActiveRecipe(recipeId){
     
     <div class="card rounded imgCard shadow m-0 p-0 w-100" :style="{backgroundImage: `url(${recipe?.img})`}" type="button"   data-bs-toggle="modal" data-bs-target="#recipeModal" @click="setActiveRecipe(recipe.id)">
             <div class="d-flex justify-content-between align-items-center p-0 mb-5">
-                <span class="rounded bg-dark text-light opacity-75 p-1">{{ recipe?.category }}</span>
+                <span class="rounded bg-dark text-light opacity-75">{{ recipe?.category }}</span>
                 <div v-if="account">
                     <div v-if="favorited != null" class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="removeFavorite(favorited?.id)">
                         <i class="mdi mdi-heart fs-4 text-danger"></i></div>
