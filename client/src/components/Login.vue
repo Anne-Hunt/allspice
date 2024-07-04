@@ -46,6 +46,12 @@ async function logout() {
 </template>
 
 <style lang="scss" scoped>
+img{
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  object-position: center;
+}
 .fontplain{
   text-shadow: 0px 0px 0px black;
 }

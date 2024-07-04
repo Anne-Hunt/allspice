@@ -30,9 +30,9 @@ accountData.value = { ...AppState.account } )
 
 <template>
 <div class="container-fluid m-0 p-0">
-  <div class="container-fluid heroImg shadow m-0 p-0" :style="{backgroundImage: `url(${account?.coverImg})`}">
+  <div class="container-fluid shadow m-0 p-0">
     <Navbar class="bg-dark"/>
-    <div class="row p-0 m-0 justify-content-center align-content-bottom text-center">
+    <div class="row p-0 m-0 heroImg justify-content-center align-content-bottom text-center" :style="{backgroundImage: `url(${account?.coverImg})`}">
       <h1 class="text-light pb-5 fontfix">Welcome {{ account.name }}</h1>
       <div class="pt-5">
 
@@ -53,7 +53,7 @@ accountData.value = { ...AppState.account } )
       <RecipeCard :recipe="recipe"/>
     </div>
   </div>
-  <div v-else><h4>Click the <i class="mdi mdi-plus-circle"></i> below to add a recipe!</h4></div>
+  <div v-else class="row g-3 mt-5 px-3"><h4>Click the <i class="mdi mdi-plus-circle"></i> below to add a recipe!</h4></div>
   <div v-if="favorites.length > 0" class="row g-3 mt-5 px-3">
 
     <h4>Your Favorites</h4>
@@ -61,7 +61,7 @@ accountData.value = { ...AppState.account } )
       <RecipeCard :recipe="favorite"/>
     </div>
   </div>
-  <div v-else><h4>Return to the home page and <i class="mdi mdi-heart"></i></h4> some recipes to add favorites!</div>
+  <div v-else class="row g-3 mt-5 px-3"><h4>Return to the home page and <i class="mdi mdi-heart"></i> some recipes to add favorites!</h4></div>
 </div>
 
 
