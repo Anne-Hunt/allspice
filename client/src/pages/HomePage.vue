@@ -9,8 +9,9 @@ import Navbar from '../components/Navbar.vue';
 
 const recipes = computed(()=>{
   if(filterBy.value == 'all') {return AppState.recipes}
-  if(filterBy.value == 'favorites') {return AppState.recipeFans.filter(recipe => recipe.favorite.creatorId == AppState.account.id)}
-  if(filterBy.value == 'created'){return AppState.recipes.filter(recipe => recipe.creatorId == AppState.account.id)} else
+  if(filterBy.value == 'favorites') {return AppState.favorites}
+  if(filterBy.value == 'created'){return AppState.userRecipes}
+    else
   return AppState.recipes.filter(recipe => recipe.category == filterBy.value)})
 
 const filterBy = ref('all')
@@ -30,6 +31,7 @@ async function getFavorites(){
       return
     }
     await accountService.getFavorites()
+    logger.log(AppState.favorites)
   }
   catch (error){
     Pop.toast("Unable to get favorites", 'error');
@@ -37,9 +39,24 @@ async function getFavorites(){
   }
 }
 
+async function getUserRecipes(){
+  try {
+    if(!AppState.account){
+      return
+    }
+    await accountService.getRecipes()
+    logger.log(AppState.userRecipes)
+  }
+  catch (error){
+    Pop.toast("Unable to get user recipes", 'error');
+    logger.error("Unable to get user recipes", error)
+  }
+}
+
 onMounted(()=>
   {getRecipes()
     getFavorites()
+    getUserRecipes()
 })
 </script>
 

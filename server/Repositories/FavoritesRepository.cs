@@ -8,10 +8,14 @@ public class FavoritesRepository
         _db = db;
     }
 
-    internal List<Favorite> GetFavorites(string userId)
+    internal List<RecipeFan> GetFavorites(string userId)
     {
-        string sql = "SELECT * FROM favorites WHERE favorites.CreatorId = @userId;";
-        List<Favorite> favorites = _db.Query<Favorite>(sql, new { userId }).ToList();
+        string sql = @"
+        SELECT * 
+        FROM favorites 
+        JOIN recipes ON recipes.Id = favorites.recipeId 
+        WHERE favorites.CreatorId = @userId;";
+        List<RecipeFan> favorites = _db.Query<RecipeFan>(sql, new { userId }).ToList();
         return favorites;
     }
 
