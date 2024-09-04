@@ -5,7 +5,6 @@ import { api } from "./AxiosService.js"
 
 
 class FavoriteService{
-
     async favorite(recipeId) {
         // const userId = AppState.account.id
         const recipeData = {recipeId: recipeId}

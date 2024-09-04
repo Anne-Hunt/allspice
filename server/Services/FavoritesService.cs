@@ -11,9 +11,9 @@ public class FavoritesService
         _repository = repository;
     }
 
-    internal List<Favorite> GetFavorites(string userId)
+    internal List<RecipeFan> GetFavorites(string userId)
     {
-        List<Favorite> favorites = _repository.GetFavorites(userId);
+        List<RecipeFan> favorites = _repository.GetFavorites(userId);
         return favorites;
     }
 

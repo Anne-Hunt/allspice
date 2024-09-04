@@ -47,19 +47,19 @@ async function setActiveRecipe(recipeId){
 
 <template>
     
-    <div class="card rounded imgCard shadow m-0 p-0 w-100" :style="{backgroundImage: `url(${recipe?.img})`}" type="button"   data-bs-toggle="modal" data-bs-target="#recipeModal" @click="setActiveRecipe(recipe.id)">
+    <div class="card rounded imgCard shadow m-0 p-0 w-100" :style="{backgroundImage: `url(${recipeFan?.img})`}" type="button"   data-bs-toggle="modal" data-bs-target="#recipeModal" @click="setActiveRecipe(recipeFan.id)">
             <div class="d-flex justify-content-between align-items-center p-0 mb-5">
-                <span class="rounded bg-dark text-light opacity-75 m-0 p-2">{{ recipe?.category }}</span>
+                <span class="rounded bg-dark text-light opacity-75 m-0 p-2">{{ recipeFan?.category }}</span>
                 <div v-if="account">
                     <div v-if="favorited != null" class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="removeFavorite(favorited?.id)">
                         <i class="mdi mdi-heart fs-4 text-danger"></i></div>
-                        <div v-else-if="favorited == null" class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="favoriteRecipe(recipe?.id)"><i class="mdi mdi-heart-outline fs-4"></i></div>
+                        <div v-else-if="favorited == null" class="rounded-bottom bg-dark text-light opacity-75 p-1" @click="favoriteRecipe(recipeFan?.id)"><i class="mdi mdi-heart-outline fs-4"></i></div>
                     </div>
                 </div>
                 <div class="card-body text-truncated d-flex align-content-end flex-wrap m-0 p-0">
                     <div class="bg-dark rounded-bottom text-light opacity-75 w-100 p-1">
-                        <span class="card-text"><strong>{{ recipe?.title }}</strong></span>
-                        <p class="card-text text-truncate">{{ recipe?.instructions }}</p>
+                        <span class="card-text"><strong>{{ recipeFan?.title }}</strong></span>
+                        <p class="card-text text-truncate">{{ recipeFan?.instructions }}</p>
                     </div>
                 </div>
             </div>

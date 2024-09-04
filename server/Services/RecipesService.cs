@@ -75,4 +75,10 @@ public class RecipesService
         List<Recipe> recipes = _repository.SearchRecipes(searchQuery);
         return recipes;
     }
+
+    internal List<Recipe> GetUserRecipes(string userId)
+    {
+        List<Recipe> recipes = _repository.GetUserRecipes(userId);
+        return recipes;
+    }
 }
